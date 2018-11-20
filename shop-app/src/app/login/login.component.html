@@ -1,0 +1,24 @@
+<div>
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin(this.loginForm)">
+    <!--<input type="hidden" formControlName="$key">-->
+    <div class="form-group">
+      <label class="form-control-label" >Email</label>
+      <input type="email" class="form-control" formControlName="email" placeholder="email">
+      <div *ngIf="formControls.email.errors">This field is required.</div>-->
+    </div>
+    <div class="form-group" >
+      <label class="form-control-label">Password</label>
+      <input type="password" class="form-control" formControlName="password" placeholder="password">
+      <div  *ngIf="formControls.password.errors">
+        <label *ngIf="formControls.password.errors.required">This field is required.</label>
+        <label *ngIf="formControls.password.errors.minlength">Atleast 8 numbers.</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="submit" value="Submit">
+    </div>
+  </form>
+  <div *ngIf="this.message">
+    Wrong password or email
+  </div>
+</div>

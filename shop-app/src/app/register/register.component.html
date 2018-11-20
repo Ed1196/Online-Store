@@ -1,0 +1,56 @@
+<div>
+  <form [formGroup]="registerForm" (ngSubmit)="onRegister(this.registerForm)">
+    <!--<input type="hidden" formControlName="$key">-->
+    <div>
+      <label>Email</label>
+      <input formControlName="email">
+      <div *ngIf="submitted && formControls.email.errors">This field is required.</div>
+    </div>
+    <div>
+      <label>Password</label>
+      <input formControlName="password">
+      <div  *ngIf="submitted && formControls.password.errors">
+        <label *ngIf="formControls.password.errors.required">This field is required.</label>
+        <label *ngIf="formControls.password.errors.minlength">Atleast 8 numbers.</label>
+      </div>
+    </div>
+    <div>
+      <label>Username</label>
+      <input formControlName="username">
+    </div>
+    <div>
+      <label>Street</label>
+      <input formControlName="street">
+    </div>
+    <div>
+      <label>State</label>
+      <input formControlName="state">
+    </div>
+    <div>
+      <label>Zip code</label>
+      <input formControlName="zipCode">
+    </div>
+    <div>
+      <label>Phone</label>
+      <input formControlName="phone">
+    </div>
+    <div>
+      <input type="submit" value="Submit">
+    </div>
+  </form>
+</div>
+<p>
+value: {{ registerForm.controls['email'].value }}
+value: {{ registerForm.controls['password'].value}}
+value: {{ registerForm.controls['street'].value }}
+value: {{ registerForm.controls['state'].value}}
+value: {{ registerForm.controls['zipCode'].value }}
+value: {{ registerForm.controls['username'].value}}
+value: {{ registerForm.controls['phone'].value }}
+</p>
+
+<div>
+  <form>
+    <button onclick="getFile()"></button>
+  </form>
+</div>
