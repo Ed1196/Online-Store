@@ -1,13 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+;
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { environment } from './../environments/environment';
-import { RouterModule } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { AngularFireDatabaseModule } from 'angularfire2/database'; 
+
+import { AngularFireDatabase} from 'angularfire2/database'
+import { FirebaseObjectObservable } from 'angularfire2/database-deprecated'
+
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireAuth } from 'angularfire2/auth';
+
+
+import { RouterModule, Router } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
+import { environment } from './../environments/environment';
 import { StoreNavbarComponent } from './store-navbar/store-navbar.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
@@ -21,6 +30,11 @@ import { AdminAddItemsComponent } from './admin/admin-add-items/admin-add-items.
 import { CheckOutComponent } from './check-out/check-out.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { UserOrdersComponent } from './user-orders/user-orders.component';
+import { ItemFormComponent } from './admin/item-form/item-form.component';
+import { AuthService } from './services/auth.service'
+import { AuthGuardService } from './services/auth-guard.service';
+import { UsersService } from './services/users.service';
+import { AdminAuthGuardService } from './services/admin-auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -38,6 +52,7 @@ import { UserOrdersComponent } from './user-orders/user-orders.component';
     CheckOutComponent,
     HomePageComponent,
     UserOrdersComponent,
+    ItemFormComponent,
 
   ],
   imports: [
@@ -45,24 +60,45 @@ import { UserOrdersComponent } from './user-orders/user-orders.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgbModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomePageComponent },
       { path: 'cart-page', component: CartPageComponent},
       { path: 'category', component: CategoryComponent },
-      { path: 'check-out', component: CheckOutComponent },
-      { path: 'item-page', component: ItemPageComponent },
+      { path: 'category/sub-category', component: SubCategoryComponent},
+      { path: 'category/sub-category/item-page', component: ItemPageComponent },
+      { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuardService] },
       { path: 'sign-in', component: SignInComponent },
       { path: 'sign-up', component: SignUpComponent },
-      { path: 'sub-category', component: SubCategoryComponent},
-      { path: 'user-orders', component: UserOrdersComponent},
-      { path: 'admin/add-items', component: AdminAddItemsComponent },
-      { path: 'admin/manage-orders', component: AdminCartManageOrdersComponent },
-      { path: 'admin/edit-items', component: AdminEditItemsComponent }
+      { path: 'user-orders', component: UserOrdersComponent, canActivate: [AuthGuardService] },
+      { path: 'admin/add-items', component: AdminAddItemsComponent, canActivate: [AuthGuardService, AdminAuthGuardService]  },
+      { path: 'admin/add-items/add', component: ItemFormComponent , canActivate: [AuthGuardService, AdminAuthGuardService] },
+      { path: 'admin/manage-orders', component: AdminCartManageOrdersComponent , canActivate: [AuthGuardService, AdminAuthGuardService] },
+      { path: 'admin/edit-items', component: AdminEditItemsComponent , canActivate: [AuthGuardService, AdminAuthGuardService] }
 
     ])
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    AuthGuardService,
+    AdminAuthGuardService,
+    UsersService  
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  constructor(private usersService: UsersService,private auth: AuthService, router: Router) {
+    auth.user$.subscribe( user => {
+      if (user) {
+        usersService.save(user);
+
+        let returnUrl = localStorage.getItem('returnUrl');
+        router.navigateByUrl(returnUrl);
+      }
+    })
+  }
+
+ }

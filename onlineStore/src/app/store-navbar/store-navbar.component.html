@@ -1,21 +1,18 @@
 <nav class="navbar navbar-expand-md navbar-light fixed-top" style="background-color: #e3f2fd;">
     <a class="navbar-brand" routerLink="/">Online store</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav mr-auto">
         <li ngbDropdown class="nav-item dropdown">
           <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
           <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01">
-            <a class="dropdown-item" href="/category">Categories</a>
+            <a class="dropdown-item" routerLink="/category">Categories</a>
           </div>
         </li>
-        <li class="nav-item">
+        <li *ngIf= "!(auth.user$ | async)" class="nav-item">
           <a class="nav-link" routerLink="/sign-in">Sign-in</a>
         </li>
-        <li class="nav-item">
+        <li *ngIf= "!(auth.user$ | async)" class="nav-item">
           <a class="nav-link" routerLink="/sign-up">Sign-up</a>
         </li>
         <li class="nav-item">
@@ -25,13 +22,14 @@
     </div>
     <div class="navbar-toggler-right">
       <ul class="navbar-nav mr-auto">
-        <li ngbDropdown class="nav-item dropdown">
-          <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
+        <li *ngIf="auth.user$ | async as user" ngbDropdown class="nav-item dropdown">
+          <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ user.displayName }}</a>
           <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01">
-            <a class="dropdown-item" routerLink="/user-orders"> Orders </a>
+            <a class="dropdown-item" routerLink="/user-orders" *ngIf=""> Orders </a>
             <a class="dropdown-item" routerLink="/admin/manage-orders"> Manage Orders </a>
             <a class="dropdown-item" routerLink="/admin/edit-items"> Edit Items </a>
-            <a class="dropdown-item" routerLink="#"> Log out </a>
+            <a class="dropdown-item" routerLink="/admin/add-items/add"> Add Items </a>
+            <a class="dropdown-item" (click)="logout()" routerLink="/"> Log out </a>
           </div>
         </li>
         <li>
