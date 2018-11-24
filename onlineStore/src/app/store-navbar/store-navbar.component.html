@@ -9,10 +9,10 @@
             <a class="dropdown-item" routerLink="/category">Categories</a>
           </div>
         </li>
-        <li *ngIf= "!(auth.user$ | async)" class="nav-item">
+        <li *ngIf= "!(userModel)" class="nav-item">
           <a class="nav-link" routerLink="/sign-in">Sign-in</a>
         </li>
-        <li *ngIf= "!(auth.user$ | async)" class="nav-item">
+        <li *ngIf= "!(userModel)" class="nav-item">
           <a class="nav-link" routerLink="/sign-up">Sign-up</a>
         </li>
         <li class="nav-item">
@@ -22,13 +22,15 @@
     </div>
     <div class="navbar-toggler-right">
       <ul class="navbar-nav mr-auto">
-        <li *ngIf="auth.user$ | async as user" ngbDropdown class="nav-item dropdown">
-          <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ user.displayName }}</a>
+        <li *ngIf="userModel" ngbDropdown class="nav-item dropdown">
+          <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ userModel.name }}</a>
           <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01">
-            <a class="dropdown-item" routerLink="/user-orders" *ngIf=""> Orders </a>
-            <a class="dropdown-item" routerLink="/admin/manage-orders"> Manage Orders </a>
-            <a class="dropdown-item" routerLink="/admin/edit-items"> Edit Items </a>
-            <a class="dropdown-item" routerLink="/admin/add-items/add"> Add Items </a>
+            <ng-container *ngIf= "userModel.Admin">  
+              <a class="dropdown-item" routerLink="/admin/manage-orders"> Manage Orders </a>
+              <a class="dropdown-item" routerLink="/admin/edit-items"> Edit Items </a>
+              <a class="dropdown-item" routerLink="/admin/add-items/add"> Add Items </a>
+            </ng-container>
+            <a class="dropdown-item" routerLink="/user-orders"> Orders </a>
             <a class="dropdown-item" (click)="logout()" routerLink="/"> Log out </a>
           </div>
         </li>

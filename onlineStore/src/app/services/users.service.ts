@@ -6,9 +6,7 @@ import { UserModel } from './models/user-model';
 
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UsersService {
 
   constructor(private dataBase: AngularFireDatabase) { }

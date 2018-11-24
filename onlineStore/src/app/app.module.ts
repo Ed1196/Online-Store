@@ -88,7 +88,7 @@ import { AdminAuthGuardService } from './services/admin-auth-guard.service';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
+export class AppModule{
 
   constructor(private usersService: UsersService,private auth: AuthService, router: Router) {
     auth.user$.subscribe( user => {

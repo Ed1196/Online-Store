@@ -5,6 +5,10 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 import { Observable } from 'rxjs/Observable';
+import { UserModel } from './models/user-model';
+import { UsersService } from './users.service';
+import 'rxjs/add/operator/switchMap';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +16,9 @@ import { Observable } from 'rxjs/Observable';
 export class AuthService {
   user$: Observable<firebase.User>;
   
-  constructor(public Auth: AngularFireAuth, private route: ActivatedRoute) {
+  constructor(private userService: UsersService, 
+              private Auth: AngularFireAuth, 
+              private route: ActivatedRoute) {
     this.user$ = Auth.authState;
   
   }
@@ -30,5 +36,18 @@ export class AuthService {
 
   getState() {
     return this.Auth.authState;
+  }
+
+  get userModel$() : Observable<UserModel> {
+      return this.user$
+        .switchMap( user => {
+          if (user) {
+          return this.userService.getUser(user.uid).valueChanges();
+          } else {
+            return of(null);
+          }
+        });
+
+
   }
 }

@@ -3,6 +3,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from 'src/app/services/auth.service'
 import * as firebase from 'firebase';
+import { UserModel } from '../services/models/user-model';
 
 @Component({
   selector: 'store-navbar',
@@ -10,10 +11,11 @@ import * as firebase from 'firebase';
   styleUrls: ['./store-navbar.component.css']
 })
 export class StoreNavbarComponent {
-  $user: Observable<firebase.User>;
+ 
+  userModel: UserModel;
 
   constructor(private auth: AuthService) {
-    
+    auth.userModel$.subscribe(userModel => this.userModel = userModel);
   }
 
   login(){

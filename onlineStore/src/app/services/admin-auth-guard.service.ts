@@ -12,9 +12,13 @@ export class AdminAuthGuardService implements CanActivate {
   constructor(private auth: AuthService, private userService: UsersService) { }
 
   canActivate(): Observable<boolean> {
-    return this.auth.user$
-      .switchMap(user => this.userService.getUser(user.uid).valueChanges())
-      .map(UserModule => UserModule.Admin);
+    let booleanIsAdmin = this.auth.userModel$
+    .map(userModel => {
+        console.log(`DBuG: userModel.Admin=`, userModel.Admin);
+        return userModel.Admin;
+    });
+    console.log(`DBuG: userModel.Admin=`, booleanIsAdmin);
+    return booleanIsAdmin;
   }
 
 }
