@@ -6,7 +6,7 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
 
 import { Observable } from 'rxjs/Observable';
 import { UserModel } from './models/user-model';
-import { UsersService } from './users.service';
+import { UsersService } from 'src/app/services/dbAccess/users.service';
 import 'rxjs/add/operator/switchMap';
 import { of } from 'rxjs';
 
@@ -18,24 +18,35 @@ export class AuthService {
   
   constructor(private userService: UsersService, 
               private Auth: AngularFireAuth, 
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private usersService: UsersService,
+              private router: Router) {
     this.user$ = Auth.authState;
   
   }
 
   doLogin(){
-    let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '';
-    localStorage.setItem('returnUrl', returnUrl);
-
     this.Auth.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+    let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+    localStorage.setItem('returnUrl', returnUrl);    
   }
 
   doLogout() {
     this.Auth.auth.signOut();
   }
 
-  getState() {
-    return this.Auth.authState;
+  saveUser() {
+    this.user$.subscribe( user => {
+      if (user) {
+        this.usersService.save(user);
+
+        let returnUrl = localStorage.getItem('returnUrl');
+        if(returnUrl){
+          localStorage.removeItem('returnUrl')
+          this.router.navigateByUrl(returnUrl);
+        }
+      }
+    })
   }
 
   get userModel$() : Observable<UserModel> {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireObject} from 'angularfire2/database';
 
 import * as firebase from 'firebase';
-import { UserModel } from './models/user-model';
+import { UserModel } from 'src/app/services/models/user-model';
 
 
 
@@ -14,7 +14,7 @@ export class UsersService {
     save(user: firebase.User){
       this.dataBase.object('/users/' + user.uid).update({
         name: user.displayName,
-        email: user.email
+        email: user.email,
       });
     }
 

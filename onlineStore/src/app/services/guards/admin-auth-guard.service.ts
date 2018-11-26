@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from './auth.service';
-import { UsersService } from './users.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { UsersService } from '../dbAccess/users.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';

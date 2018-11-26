@@ -23,8 +23,10 @@ export class SignInComponent{
   }
 
   login() {
+    
     this.auth.doLogin();
-    this.router.navigate(['']);
+    this.router.navigate(['/']);
+    
   }
 
 }

@@ -1,3 +1,27 @@
 <p>
-  admin-edit-items works!
+  <input 
+  #query
+  (keyup)="filter(query.value)"
+  type="text" class="form-control" placeholder="Search...."> 
+</p>
+<table class = "table">
+  <thead>
+    <tr>
+      <th>Item Name</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor = "let i of filterProducts">
+      <td>{{ i.payload.val().ItemName }}</td>
+      <td>{{ i.payload.val().Price | currency:'USD': true}}</td>
+      <td>
+        <a [routerLink]="['/admin/add-items/edit-form/', i.key]">Edit</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>
+  <a routerLink = "/admin/add-items/item-form" class = "btn btn-primary">New Item</a>
 </p>

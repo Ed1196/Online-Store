@@ -32,9 +32,12 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { UserOrdersComponent } from './user-orders/user-orders.component';
 import { ItemFormComponent } from './admin/item-form/item-form.component';
 import { AuthService } from './services/auth.service'
-import { AuthGuardService } from './services/auth-guard.service';
-import { UsersService } from './services/users.service';
-import { AdminAuthGuardService } from './services/admin-auth-guard.service';
+import { AuthGuardService } from './services/guards/auth-guard.service';
+import { UsersService } from 'src/app/services/dbAccess/users.service';
+import { AdminAuthGuardService } from './services/guards/admin-auth-guard.service';
+import { CategoryService } from './services/dbAccess/category.service';
+import { ItemService } from './services/dbAccess/item.service';
+import { EditFormComponent } from './admin/edit-form/edit-form.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +56,7 @@ import { AdminAuthGuardService } from './services/admin-auth-guard.service';
     HomePageComponent,
     UserOrdersComponent,
     ItemFormComponent,
+    EditFormComponent,
 
   ],
   imports: [
@@ -73,32 +77,29 @@ import { AdminAuthGuardService } from './services/admin-auth-guard.service';
       { path: 'sign-in', component: SignInComponent },
       { path: 'sign-up', component: SignUpComponent },
       { path: 'user-orders', component: UserOrdersComponent, canActivate: [AuthGuardService] },
-      { path: 'admin/add-items', component: AdminAddItemsComponent, canActivate: [AuthGuardService, AdminAuthGuardService]  },
-      { path: 'admin/add-items/add', component: ItemFormComponent , canActivate: [AuthGuardService, AdminAuthGuardService] },
-      { path: 'admin/manage-orders', component: AdminCartManageOrdersComponent , canActivate: [AuthGuardService, AdminAuthGuardService] },
-      { path: 'admin/edit-items', component: AdminEditItemsComponent , canActivate: [AuthGuardService, AdminAuthGuardService] }
 
+      { path: 'admin/add-items/item-form', component: ItemFormComponent , canActivate: [AuthGuardService, AdminAuthGuardService] },
+      { path: 'admin/add-items/edit-form/:id', component: EditFormComponent , canActivate: [AuthGuardService, AdminAuthGuardService] },
+      { path: 'admin/add-items', component: AdminAddItemsComponent, canActivate: [AuthGuardService, AdminAuthGuardService]  },
+      { path: 'admin/manage-orders', component: AdminCartManageOrdersComponent , canActivate: [AuthGuardService, AdminAuthGuardService] },
+      { path: 'admin/edit-items', component: AdminEditItemsComponent , canActivate: [AuthGuardService, AdminAuthGuardService] },
+      
     ])
   ],
   providers: [
     AuthService,
     AuthGuardService,
     AdminAuthGuardService,
-    UsersService  
+    UsersService,
+    CategoryService,
+    ItemService   
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule{
 
-  constructor(private usersService: UsersService,private auth: AuthService, router: Router) {
-    auth.user$.subscribe( user => {
-      if (user) {
-        usersService.save(user);
-
-        let returnUrl = localStorage.getItem('returnUrl');
-        router.navigateByUrl(returnUrl);
-      }
-    })
+  constructor(private auth: AuthService) {
+   this.auth.saveUser(); 
   }
 
  }
