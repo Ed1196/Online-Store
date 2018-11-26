@@ -15,31 +15,42 @@ import { of } from 'rxjs';
 })
 export class AuthService {
   user$: Observable<firebase.User>;
-  
-  constructor(private userService: UsersService, 
-              private Auth: AngularFireAuth, 
+
+  constructor(private userService: UsersService,
+              private Auth: AngularFireAuth,
               private route: ActivatedRoute,
               private usersService: UsersService,
               private router: Router) {
     this.user$ = Auth.authState;
-  
+
   }
 
   doLogin(){
     this.Auth.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+
     let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
-    localStorage.setItem('returnUrl', returnUrl);    
+    localStorage.setItem('returnUrl', returnUrl);
   }
 
   doLogout() {
     this.Auth.auth.signOut();
   }
 
+  doLoginEmail(loginForm){
+    this.Auth.auth.signInWithEmailAndPassword(
+      loginForm.controls['email'].value, 
+      loginForm.controls['password'].value)
+        .then((firebaseUser) => {
+           console.log(firebaseUser)
+        }).catch((error) => {
+           console.log(error)
+        })
+  }
+
   saveUser() {
     this.user$.subscribe( user => {
       if (user) {
         this.usersService.save(user);
-
         let returnUrl = localStorage.getItem('returnUrl');
         if(returnUrl){
           localStorage.removeItem('returnUrl')
