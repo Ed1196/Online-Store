@@ -35,7 +35,13 @@ export class ItemService {
         return snapshot.val();
       }) , errorObject => {
         console.log("The read failed: " + errorObject.code);
-        return null;
+        return null;    
       });
   }
+  //or use this 
+  /*  firebase.database().ref("Items").once('value').then(function(snapshot) {  
+        console.log(snapshot.val());
+      } , function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+      });*/
 }
