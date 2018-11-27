@@ -9,6 +9,7 @@ export class CategoryService {
   constructor(private dbAccess: AngularFireDatabase) { }
 
    
+  
 
   getCategories() {
     return this.dbAccess.list('/Category').valueChanges();
@@ -18,4 +19,8 @@ export class CategoryService {
     console.log(optionSelected);
     return this.dbAccess.list('/SubCategory' + '/' + optionSelected ).valueChanges();
   }
+
+  
+
+
 }

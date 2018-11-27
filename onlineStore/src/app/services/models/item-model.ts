@@ -1,9 +1,10 @@
 export interface ItemModel {
-    Categories: string;
-    SubCategories: string;
-    ItemName: string;
-    ItemDescription: string;
-    Price: number;
-    Size: string;
-    ImageUrl: string;
+    $key ?: string; 
+    Categories ?: string;
+    ImageUrl ?: string;
+    ItemDescription ?: string;
+    ItemName ?: string;
+    Price ?: number;
+    Size ?: string;
+    SubCategories ?: string;    
 }

@@ -19,7 +19,9 @@ export class UsersService {
     }
 
     getUser(uid: string): AngularFireObject<UserModel> {
+
       return this.dataBase.object('/users/' + uid);
+    
     }
   
 }

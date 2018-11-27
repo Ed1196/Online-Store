@@ -15,7 +15,9 @@ export class HomePageComponent{
 
 
   constructor(private itemService: ItemService, private categoryService: CategoryService, private route:Router) { 
-    this.Items$ = itemService.getAll();
+    this.Items$ = itemService.getAll()
+    .map(prods => prods
+      .map(p => p.payload.val()));
 
     this.Categories$ = this.categoryService.getCategories();
   }

@@ -38,6 +38,7 @@ import { AdminAuthGuardService } from './services/guards/admin-auth-guard.servic
 import { CategoryService } from './services/dbAccess/category.service';
 import { ItemService } from './services/dbAccess/item.service';
 import { EditFormComponent } from './admin/edit-form/edit-form.component';
+import { ShoppingCartService } from './services/dbAccess/shopping-cart.service';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,7 @@ import { EditFormComponent } from './admin/edit-form/edit-form.component';
   ],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(environment.firebase, 'onlinestore'),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     FormsModule,
@@ -92,7 +93,9 @@ import { EditFormComponent } from './admin/edit-form/edit-form.component';
     AdminAuthGuardService,
     UsersService,
     CategoryService,
-    ItemService   
+    ItemService,
+    ShoppingCartService,
+    AngularFireAuth    
   ],
   bootstrap: [AppComponent]
 })
