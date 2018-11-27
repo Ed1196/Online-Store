@@ -28,4 +28,14 @@ export class ItemService {
   delete(id) {
     return this.dbAccess.object('/Items/' + id).remove();
   }
+
+  getAllItemWithKey(){
+    firebase.database().ref("Items").once('value').then((snapshot => {  
+        console.log(snapshot.val());
+        return snapshot.val();
+      }) , errorObject => {
+        console.log("The read failed: " + errorObject.code);
+        return null;
+      });
+  }
 }
