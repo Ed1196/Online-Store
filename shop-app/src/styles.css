@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+/* the above is located at node_module folder*/
+
+body { padding-top: 60px;
+        font-size: 16px;
+        font-family: Helvetica, Arial, sans-serif;
+ }

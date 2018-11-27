@@ -1,0 +1,22 @@
+<div>
+    <form [formGroup]="loginForm" (ngSubmit)="loginEmail(this.loginForm)">
+      <!--<input type="hidden" formControlName="$key">-->
+      <div class="form-group">
+        <label class="form-control-label" >Email</label>
+        <input type="email" class="form-control" formControlName="email" placeholder="email">
+      </div>
+      <div class="form-group" >
+        <label class="form-control-label">Password</label>
+        <input type="password" class="form-control" formControlName="password" placeholder="password">
+      </div>
+      <div class="form-group">
+        <button
+          class="btn btn-primary">Log in with Email
+        </button>
+      </div>
+    </form>
+  </div>
+<button 
+  (click) = "login()" 
+  class="btn btn-primary">Log in with Google
+</button>

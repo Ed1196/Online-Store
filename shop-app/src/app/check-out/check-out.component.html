@@ -1,0 +1,45 @@
+<table class = "table">
+  <thead>
+    <tr>
+      <th>Item Name</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor = "let i of carts">
+      <td>{{ i.payload.val().ItemName }}</td>
+      <td>{{ i.payload.val().Price | currency:'USD': true}}</td>
+      <td>
+        <a [routerLink]="['/admin/add-items/edit-form/', i.key]">Edit</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>total cost: {{totalCost}}</p>
+
+<div>
+  <form [formGroup]="locationForm" (ngSubmit)="onCheckOut(this.locationForm)">
+    <div>
+      <label>Street</label>
+      <input formControlName="street">
+    </div>
+    <div>
+      <label>State</label>
+      <input formControlName="state">
+    </div>
+    <div>
+      <label>Zip code</label>
+      <input formControlName="zipCode">
+    </div>
+    <div>
+      <input type="submit" value="Submit">
+    </div>
+  </form>
+</div>
+
+<div *ngIf="checkOut">
+    the peymant is done
+    <a routerLink = "" class = "btn btn-primary">home</a>
+</div>
