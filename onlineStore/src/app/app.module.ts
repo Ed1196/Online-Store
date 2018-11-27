@@ -70,8 +70,8 @@ import { EditFormComponent } from './admin/edit-form/edit-form.component';
     RouterModule.forRoot([
       { path: '', component: HomePageComponent },
       { path: 'cart-page', component: CartPageComponent},
-      { path: 'category', component: CategoryComponent },
-      { path: 'category/sub-category', component: SubCategoryComponent},
+      { path: 'category/:id', component: CategoryComponent },
+      { path: 'category/sub-category/:id', component: SubCategoryComponent},
       { path: 'category/sub-category/item-page', component: ItemPageComponent },
       { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuardService] },
       { path: 'sign-in', component: SignInComponent },

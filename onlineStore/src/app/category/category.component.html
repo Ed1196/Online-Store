@@ -1,1 +1,17 @@
-<a routerLink="/category/sub-category">Sub-Category</a>
+<div class="row">
+        <ul class="list-group">
+            <div *ngFor="let cat of subCategories$ | async" >
+                <div class="card bg-dark text-white">
+                    <img class="card-img" src="https://www.zmedispa.com/wp-content/uploads/2017/02/placeholder-800x600.png" alt="Card image">
+                    <div class="card-img-overlay">
+                      <a  
+                      class="card-title"
+                      [routerLink]="['/category/sub-category/', cat]">
+                      {{ cat }}
+                    </a>
+                    </div>
+                </div>
+            </div>
+        </ul>
+</div>
+

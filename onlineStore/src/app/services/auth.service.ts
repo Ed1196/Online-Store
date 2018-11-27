@@ -72,4 +72,19 @@ export class AuthService {
 
 
   }
+
+  onRegister(registerForm){
+     //create username and password
+     firebase.auth().createUserWithEmailAndPassword(registerForm.controls['email'].value, registerForm.controls['password'].value)
+     //check after login/ save get uid and save add data to userId
+     firebase.auth().onAuthStateChanged((user)=>{
+         if(user){
+           firebase.database().ref("users").child(user.uid).set({
+             "email": registerForm.controls['email'].value,
+             "name": registerForm.controls['username'].value,
+             "Admin": false
+           });
+         }
+       })
+  }
 }
