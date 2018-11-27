@@ -1,21 +1,20 @@
 
 
 <div class="row" >
-    <ng-container *ngFor = "let items of Keys$ | async; let i = index">
-     
+    <ng-container *ngFor = "let items of filterProducts">
+        <div (ngModel) ="id" *ngIf ="items.payload.val().SubCategories === id">
             
                 <div class="card col" style="width: 30rem;">
-                        <img class="card-img-top" src="" alt="Card image cap">
+                        <img class="card-img-top" src="{{items.payload.val().ImageUrl}}" alt="Card image cap">
                         <div class="card-body">
-                          <h5 class="card-title">{{ items.key }}</h5>
-                        
-                          <a href="#" class="btn btn-primary"> Add to Cart</a>
+                          <h5 class="card-title">{{ items.payload.val().ItemName }}</h5>
+                          <p class="card-text">{{ items.payload.val().Price | currency: 'USD':true }}</p>
                           <button 
                             (click) = "addToCart(items.key)"
                             class = "btn btn-primary">
                             Add to Cart</button>
                         </div>
                       </div>
-   
+         </div>
     </ng-container>
 </div>

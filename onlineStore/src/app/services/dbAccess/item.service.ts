@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { KeyModel } from '../models/key-model';
 import { ItemModel } from '../models/item-model';
 import { map } from 'rxjs/operators';
+import * as firebase from 'firebase';
 
 
 @Injectable({
@@ -33,6 +34,7 @@ export class ItemService {
     identifier?: string;
     }
 
+      
    }
 
   create(items) {
@@ -60,17 +62,12 @@ export class ItemService {
     return this.dbAccess.list<KeyModel>('/Items/${identifiers}').valueChanges();
   }
 
-  getAllCart(){
-    this.dbAccess.list('/Items/').snapshotChanges().map(actions => { 
-      return actions.map( a => { 
-        const ItemName = a.payload.val();
-        const ImageUrl = a.payload.val();
-        const key = a.payload.val();
+  getAllItemWithKey(){
 
-        return { ItemName, ImageUrl, key };
-      });
-    });
-    
+    firebase.database().ref("Items").once('value').then((snapshot => {  
+        return snapshot.val();
+      }));
+      
   }
-
+      
 }

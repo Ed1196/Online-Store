@@ -7,7 +7,6 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database'; 
 
 import { AngularFireDatabase} from 'angularfire2/database'
-import { FirebaseObjectObservable } from 'angularfire2/database-deprecated'
 
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -62,7 +61,7 @@ import { ShoppingCartService } from './services/dbAccess/shopping-cart.service';
   ],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(environment.firebase, 'onlinestore'),
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     FormsModule,
