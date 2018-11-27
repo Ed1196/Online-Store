@@ -1,9 +1,9 @@
 <div class="row">
     <div class="col-3">
         <ul class="list-group">
-            <li *ngFor="let cat of Categories$ | async" class="list-group-item">
+            <li *ngFor="let cat of Categories$ | async" class="list-group-item"><a class="active">
                 {{ cat.name }}
-            </li>
+            </a></li>
         </ul>
     </div>
     <div class="col-9">
@@ -13,7 +13,7 @@
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" [src]="item.ImageUrl" alt="Card image cap">
                             <div class="card-body">
-                                <h5 class="card-title">{{ item.ItemName }}</h5>
+                                <h5 class="card-title"><a>{{ item.ItemName }}</a></h5>
                                 <p class="card-text">{{ item.Price | currency:"USD":true }}</p>
                             </div>
                             <div class="card-body">
