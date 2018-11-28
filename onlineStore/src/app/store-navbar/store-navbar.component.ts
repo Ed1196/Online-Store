@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { AuthService } from 'src/app/services/auth.service'
 import * as firebase from 'firebase';
 import { UserModel } from '../services/models/user-model';
+import { ShoppingCartService } from '../services/dbAccess/shopping-cart.service';
 
 @Component({
   selector: 'store-navbar',
@@ -14,8 +15,9 @@ export class StoreNavbarComponent {
  
   userModel: UserModel;
 
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, private cartService: ShoppingCartService) {
     auth.userModel$.subscribe(userModel => this.userModel = userModel);
+    
   }
 
   login(){

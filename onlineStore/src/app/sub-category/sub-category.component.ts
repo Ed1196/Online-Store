@@ -15,6 +15,7 @@ export class SubCategoryComponent implements OnInit {
   products: any[];
   filterProducts: any[];
   subscription: Subscription;
+  Total: any[];
  
   id:string;
   @Input('category') category;
@@ -28,15 +29,20 @@ export class SubCategoryComponent implements OnInit {
     this.subscription = this.itemService.getAll()
     .subscribe(products => {
       this.filterProducts = this.products = products;
+
+    
     });
     
     }
-
   
+    removeFromCart(item) {
+      this.cartService.removeFromCart(item);
+    }
 
     addToCart(item) {
       console.log(JSON.stringify(item, undefined,2));
       this.cartService.addToCart(item);
+      console.log(this.cartService.getTotal(item))
     }
 
 
