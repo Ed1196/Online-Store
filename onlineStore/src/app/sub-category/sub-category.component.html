@@ -10,13 +10,9 @@
                           <h5 class="card-title">{{ items.payload.val().ItemName }}</h5>
                           <p class="card-text">{{ items.payload.val().Price | currency: 'USD':true }}</p>
                           <button 
-                            (click) = "addToCart(items.key)"
+                            (click) = "addToCart(items)"
                             class = "btn btn-primary">
                             Add to Cart</button>
-                          <button 
-                            (click) = "removeFromCart(items.key)"
-                            class = "btn btn-primary">
-                            Remove from Cart</button>
                         </div>
                       </div>
          </div>

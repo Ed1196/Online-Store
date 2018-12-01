@@ -101,7 +101,7 @@ import { ShoppingCartService } from './services/dbAccess/shopping-cart.service';
 export class AppModule{
 
   constructor(private auth: AuthService) {
-   this.auth.saveUser(); 
+   
   }
 
  }

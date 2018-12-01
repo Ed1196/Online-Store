@@ -1,97 +1,79 @@
 import { Injectable } from '@angular/core';
+import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
+import * as firebase from 'firebase'
 import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/map';
-
-import * as firebase from 'firebase';
 import { UserModel } from 'src/app/services/models/user-model';
 import { take } from 'rxjs/operators';
-import { CartModel } from '../models/cart-model';
-import { Observable } from 'rxjs/Observable';
-import { map } from 'rxjs/operators';
-import { CartItemModel } from '../models/cart-item-model';
-import { stringify } from 'querystring';
-import { Subscription } from 'rxjs';
-
-
+import { UsersService } from './users.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShoppingCartService {
 
+
+
+  constructor(private dbAccess: AngularFireDatabase , private userService: UsersService) { }
+
+  addToCart2(product) {
+
+   
+    firebase.auth().onAuthStateChanged((user)=>{
+      if (user) {
+
+        console.log('UserId: ' + user.uid);
+        let cartId = user.uid;
+        const items: AngularFireObject<{}> = this.dbAccess.object('/ShoppingCarts/' + cartId +"/"+ product.key);
+        
+        
+        items.snapshotChanges().pipe(take(1)).subscribe((i: any) => {
+          if (i.payload.val()) {
+            items.update({ quantity: i.payload.val().quantity + 1 });
+         
+          } else {
+            items.set({ productId: product.payload.val(), quantity: 1 });
+        
+          }
+        });
+       
+
+      }else{
+       
+      }
+    })
  
-  constructor(private db: AngularFireDatabase) {  }
- 
-  private create() {
-    return this.db.list('/shopping-carts').push({
-      dateCreated: new Date().getTime()
-    });
+  
   }
- 
-  private getItemInCart(cartId: string, itemId: string) {
-    return this.db.object('/ShoppingCarts/' + cartId + '/Items/' + itemId);
+
+  getAll(id) {
+    return this.dbAccess.list("/ShoppingCarts/" + id + '/').snapshotChanges();
   }
+
+  clearCart() {
+    firebase.auth().onAuthStateChanged((user)=>{
+      if (user && confirm('Are you sure?, want to add to your cart')) {
+        this.dbAccess.list('/Cart/' + user.uid).remove();
+        return "good"
+      }else{
+        return "fail";
+      }
+    })
+
+  }
+
+  delete(id) {
+    firebase.auth().onAuthStateChanged((user)=>{
+      if (user && confirm('Are you sure?, want to add to your cart')) {
+        this.dbAccess.list('/Cart/' + user.uid + '/' + id).remove();
+        return "good"
+      }else{
+        return "fail";
+      }
+    })
+   
+  }
+
 
   
-
-  async getCart(){
-    let cartId = await this.getOrCreateCartId();
-    let cart = this.db.object('/shopping-carts/' + cartId).snapshotChanges();
-    
-    return cart;
-  }
- 
-  private async getOrCreateCartId() {
-    
- 
-    const cartId = localStorage.getItem('cartId');
-    if (cartId) { return cartId; }
- 
-    const result = await this.create();
-    localStorage.setItem('cartId', result.key);
-    return result.key;
-  }
- 
-  async addToCart(key: string) {
-    const cartId = await this.getOrCreateCartId();
-    const item: AngularFireObject<{}> = this.getItemInCart(cartId, key);
-    item.snapshotChanges().pipe(take(1)).subscribe((i: any) => {
-      if (i.payload.val()) {
-        item.update({ quantity: i.payload.val().quantity + 1, });
-        this.updateTotal(cartId);
-      } else {
-        item.set({ product: key, quantity: 1 });
-        this.createTotal(cartId);
-      }
-    });
-  }
-
-  async createTotal(cardId) {
-    const itemRef = this.db.object('/ShoppingCarts/' + cardId + '/Total');
-
-    itemRef.set({ Total: 0});
-  }
-  
-  async updateTotal(cardId) {
-    const itemRef: AngularFireObject<{}> = this.db.object('/ShoppingCarts/' + cardId + '/Total');
-    itemRef.update({ Total: 2})
-  }
-
-   getTotal(cardId: string){
-    return this.db.list('/ShoppingCarts/' + cardId + '/Total').valueChanges();
-
-  }
-
-  async removeFromCart(key: string){
-    const cartId = await this.getOrCreateCartId();
-    const item: AngularFireObject<{}> = this.getItemInCart(cartId, key); 
-    item.snapshotChanges().pipe(take(1)).subscribe((i: any) => {
-      if (i.payload.val()) {
-        item.update({ quantity: i.payload.val().quantity - 1 });
-      } else {
-        item.set({ product: key, quantity: 1 });
-      }
-    });
-  }
 }

@@ -3,6 +3,7 @@ import { AngularFireDatabase, AngularFireObject} from 'angularfire2/database';
 
 import * as firebase from 'firebase';
 import { UserModel } from 'src/app/services/models/user-model';
+import { stringify } from '@angular/core/src/render3/util';
 
 
 
@@ -16,12 +17,19 @@ export class UsersService {
         name: user.displayName,
         email: user.email,
       });
+
     }
+
+  
 
     getUser(uid: string): AngularFireObject<UserModel> {
 
       return this.dataBase.object('/users/' + uid);
     
+    }
+
+    getSingleUser(){
+     
     }
   
 }

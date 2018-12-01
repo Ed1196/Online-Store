@@ -22,7 +22,7 @@ export class SubCategoryComponent implements OnInit {
   constructor(
     private itemService: ItemService,
     private route: ActivatedRoute,
-    private cartService: ShoppingCartService) { 
+    private cartService: ShoppingCartService) {
       
       this.id = this.route.snapshot.paramMap.get('id');
       
@@ -35,14 +35,14 @@ export class SubCategoryComponent implements OnInit {
     
     }
   
-    removeFromCart(item) {
-      this.cartService.removeFromCart(item);
+    removeFromCart(itemId) {
+      console.log(itemId);
+      this.cartService.delete(itemId);
     }
 
     addToCart(item) {
-      console.log(JSON.stringify(item, undefined,2));
-      this.cartService.addToCart(item);
-      console.log(this.cartService.getTotal(item))
+      console.log("itemId: " + item.key);
+      this.cartService.addToCart2(item);
     }
 
 
