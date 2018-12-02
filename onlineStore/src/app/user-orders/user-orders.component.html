@@ -1,3 +1,16 @@
-<p>
-  user-orders works!
-</p>
+<h1>User Orders</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Date</th>
+            <th></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor = "let order of Orders">
+            <td> {{ order.payload.val().ShippingAddress.name }} </td>
+            <td> {{ order.payload.val().DatePlaced | date }} </td>
+          </tr>
+        </tbody>
+</table>

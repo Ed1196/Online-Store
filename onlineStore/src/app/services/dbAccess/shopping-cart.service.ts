@@ -6,6 +6,8 @@ import 'rxjs/add/operator/take';
 import { UserModel } from 'src/app/services/models/user-model';
 import { take } from 'rxjs/operators';
 import { UsersService } from './users.service';
+import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ export class ShoppingCartService {
 
 
 
-  constructor(private dbAccess: AngularFireDatabase , private userService: UsersService) { }
+  constructor(private dbAccess: AngularFireDatabase , private userService: UsersService, private router : Router) { }
 
   addToCart2(product) {
 
@@ -22,7 +24,7 @@ export class ShoppingCartService {
     firebase.auth().onAuthStateChanged((user)=>{
       if (user) {
 
-        console.log('UserId: ' + user.uid);
+       
         let cartId = user.uid;
         const items: AngularFireObject<{}> = this.dbAccess.object('/ShoppingCarts/' + cartId +"/"+ product.key);
         
@@ -39,7 +41,7 @@ export class ShoppingCartService {
        
 
       }else{
-       
+        this.router.navigate(['sign-in']);
       }
     })
  
@@ -47,13 +49,13 @@ export class ShoppingCartService {
   }
 
   getAll(id) {
-    return this.dbAccess.list("/ShoppingCarts/" + id + '/').snapshotChanges();
+    return this.dbAccess.list("/ShoppingCarts/" + id).snapshotChanges();
   }
 
   clearCart() {
     firebase.auth().onAuthStateChanged((user)=>{
-      if (user && confirm('Are you sure?, want to add to your cart')) {
-        this.dbAccess.list('/Cart/' + user.uid).remove();
+      if (user && confirm('Are you sure?, want to delete your cart')) {
+        this.dbAccess.list('/ShoppingCarts/' + user.uid).remove();
         return "good"
       }else{
         return "fail";
@@ -65,13 +67,12 @@ export class ShoppingCartService {
   delete(id) {
     firebase.auth().onAuthStateChanged((user)=>{
       if (user && confirm('Are you sure?, want to add to your cart')) {
-        this.dbAccess.list('/Cart/' + user.uid + '/' + id).remove();
+        this.dbAccess.list('/ShoppingCarts/' + user.uid + '/' + id).remove();
         return "good"
       }else{
         return "fail";
       }
-    })
-   
+    }) 
   }
 
 

@@ -9,6 +9,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AngularFireAuth } from 'angularfire2/auth';
 import { UserModel } from '../services/models/user-model';
 import * as firebase from 'firebase'
+import { ItemService } from '../services/dbAccess/item.service';
 
 @Component({
   selector: 'cart-page',
@@ -17,14 +18,18 @@ import * as firebase from 'firebase'
 })
 export class CartPageComponent implements OnInit {
   userModel: UserModel;
-  carts: any;
-  total: number;
+  carts: any[];
+  total = 0;
+  totalPrice = 0;
+  
   
   constructor(private router : Router, private cartService: ShoppingCartService, private auth: AuthService) {}
 
   removeItem(i){
     this.cartService.delete(i);
-    console.log(i);
+    this.total = 0;
+    this.totalPrice = 0;
+
   }
 
   clearCart(){
@@ -35,11 +40,14 @@ export class CartPageComponent implements OnInit {
   ngOnInit() {
     firebase.auth().onAuthStateChanged((user)=>{
       if (user) {
-        
         this.cartService.getAll(user.uid).subscribe(products => {
           this.carts = products;
-          console.log(products);
-        });
+          console.log("Products: " + products);
+          this.carts.forEach(i => {
+              this.total += i.payload.val()["quantity"];
+              this.totalPrice = this.totalPrice + i.payload.val()["productId"]["Price"] * i.payload.val()["quantity"];
+          })
+        })
       } else {
         this.router.navigate(['sign-in'])
       }

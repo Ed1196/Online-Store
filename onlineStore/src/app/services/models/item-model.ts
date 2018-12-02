@@ -6,5 +6,6 @@ export interface ItemModel {
     ItemName ?: string;
     Price ?: number;
     Size ?: string;
-    SubCategories ?: string;    
+    SubCategories ?: string;  
+    Quantity ?: number;    
 }

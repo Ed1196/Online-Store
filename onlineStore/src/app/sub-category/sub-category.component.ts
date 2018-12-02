@@ -36,12 +36,12 @@ export class SubCategoryComponent implements OnInit {
     }
   
     removeFromCart(itemId) {
-      console.log(itemId);
+      
       this.cartService.delete(itemId);
     }
 
     addToCart(item) {
-      console.log("itemId: " + item.key);
+    
       this.cartService.addToCart2(item);
     }
 

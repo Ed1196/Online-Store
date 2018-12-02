@@ -49,7 +49,7 @@
         
           <div class="form-group">
             <label for="itemDescription">Item Price</label>
-              <input [(ngModel)]="Item.Price" name="Price" id="Price" type="text" class="form-control" 
+              <input [(ngModel)]="Item.Price" name="Price" id="Price" type="number" class="form-control" 
               #price="ngModel" required>
             <div class="alert alert-danger" *ngIf="price.touched && price.invalid">
                 Price Needed!
@@ -79,6 +79,24 @@
           <div class="alert alert-danger" *ngIf="imageurl.touched && imageurl.invalid">
               Image Url Needed!
           </div>
+
+          <div class="form-group">
+              <label for="quantity">Quantity</label>
+              <select ngModel name="Quantity" id="Quantity" class="form-control"  type="number"
+              #quantity = "ngModel" required>
+                  <option value=""></option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+              </select>
+              <div class="alert alert-danger" *ngIf="quantity.touched && quantity.invalid">
+                  Quantity Needed!
+              </div>
+            </div>
+
+          
           <button class="btn btn-primary">Save</button>
         </form>
 

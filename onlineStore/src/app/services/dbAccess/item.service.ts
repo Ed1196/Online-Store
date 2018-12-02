@@ -27,6 +27,7 @@ export class ItemService {
       Price ?: number;
       Size ?: string;
       SubCategories ?: string;    
+      Quantity ?: number; 
       }
 
     interface KeyModel {

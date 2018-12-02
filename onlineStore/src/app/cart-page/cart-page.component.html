@@ -6,15 +6,17 @@
         <th>Item Name</th>
         <th>Price</th>
         <th>Total</th>
+        <th>Quantity</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor = "let i of carts" >
           <td>
-              <img [src]="i.payload.val().ImageUrl" class="thumbnail" alt="">
+              <img [src]="i.payload.val().productId.ImageUrl" class="thumbnail" alt="">
         </td>
-        <td>{{ i.payload.val().ItemName }}</td>
-        <td>{{ i.payload.val().Price | currency:'USD': true}}</td>
+        <td>{{ i.payload.val().productId.ItemName }}</td>
+        <td>{{ i.payload.val().productId.Price | currency:'USD': true}}</td>
+        <td>{{ i.payload.val().quantity }}</td>
         <td>
             <button (click)=removeItem(i.key)> remove </button>
             
@@ -25,7 +27,10 @@
     </tbody>
   </table>
   <p>
-        Cart: {{ carts?.length }}   
+        Cart: {{ total }}   
+</p>
+<p>
+    Total Price: {{ totalPrice | currency:'USD': true}}   
 </p>
   <p>
     <a routerLink = "/check-out" class = "btn btn-primary">check-out</a>

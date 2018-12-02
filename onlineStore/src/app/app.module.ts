@@ -38,6 +38,7 @@ import { CategoryService } from './services/dbAccess/category.service';
 import { ItemService } from './services/dbAccess/item.service';
 import { EditFormComponent } from './admin/edit-form/edit-form.component';
 import { ShoppingCartService } from './services/dbAccess/shopping-cart.service';
+import { OrderSummaryComponent } from './order-summary/order-summary.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { ShoppingCartService } from './services/dbAccess/shopping-cart.service';
     UserOrdersComponent,
     ItemFormComponent,
     EditFormComponent,
+    OrderSummaryComponent,
 
   ],
   imports: [
@@ -83,7 +85,7 @@ import { ShoppingCartService } from './services/dbAccess/shopping-cart.service';
       { path: 'admin/add-items', component: AdminAddItemsComponent, canActivate: [AuthGuardService, AdminAuthGuardService]  },
       { path: 'admin/manage-orders', component: AdminCartManageOrdersComponent , canActivate: [AuthGuardService, AdminAuthGuardService] },
       { path: 'admin/edit-items', component: AdminEditItemsComponent , canActivate: [AuthGuardService, AdminAuthGuardService] },
-      
+      { path: 'orders-summary', component: OrderSummaryComponent, canActivate: [AuthGuardService] },
     ])
   ],
   providers: [
