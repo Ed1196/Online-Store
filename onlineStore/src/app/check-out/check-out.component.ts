@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { OrderService } from '../services/dbAccess/order.service';
 import { UserModel } from '../services/models/user-model';
 import { AuthService } from '../services/auth.service';
+import { ItemService } from '../services/dbAccess/item.service';
 
 @Component({
   selector: 'app-check-out',
@@ -22,6 +23,12 @@ export class CheckOutComponent implements OnInit, OnDestroy{
   totalPrice = 0;
   userSubscription: Subscription;
   userID: string;
+
+  products: any[];
+  filterProducts: any[];
+  subscription: Subscription
+
+
   
   
   constructor( 
@@ -30,18 +37,33 @@ export class CheckOutComponent implements OnInit, OnDestroy{
               private router : Router,
               private dbAccess: AngularFireDatabase,
               private orderService: OrderService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private itemService: ItemService) {
 
   }
 
-  placeOrder() {
+  async placeOrder() {
     let order = this.orderService.createOrder(this.carts, this.shipping); 
-    this.orderService.saveOrder(order);
-    this.router.navigate(['orders-summary']);
+    let InStock: boolean = await this.orderService.checkStock(this.carts, this.filterProducts);
+    console.log(InStock);
+    if(InStock){
+      this.orderService.saveOrder(order);
+      this.router.navigate(['orders-summary']);
+    } else {
+      this.router.navigate(['cart-page']);
+    }
+    
   }    
 
   async ngOnInit() {
     
+    this.subscription = this.itemService.getAll()
+    .subscribe(products => {
+      this.filterProducts = this.products = products;
+
+    
+    });
+
     firebase.auth().onAuthStateChanged((user)=>{
       if (user) {
         this.cartService.getAll(user.uid).subscribe(products => {

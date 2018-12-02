@@ -15,7 +15,7 @@ export class SubCategoryComponent implements OnInit {
   products: any[];
   filterProducts: any[];
   subscription: Subscription;
-  Total: any[];
+ 
  
   id:string;
   @Input('category') category;
@@ -41,7 +41,7 @@ export class SubCategoryComponent implements OnInit {
     }
 
     addToCart(item) {
-    
+      console.log(item);
       this.cartService.addToCart2(item);
     }
 

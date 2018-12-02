@@ -59,6 +59,18 @@ export class ItemService {
     return this.dbAccess.object('/Items/' + id).remove();
   }
 
+  updateQuantity(id, newQuanity){
+   
+      if (newQuanity === 0) {
+        this.delete(id);
+      } else {
+      this.dbAccess.object('/Items/' + id).update({
+        Quantity: newQuanity
+      });
+    }
+
+  }
+
   getKey(){
     return this.dbAccess.list<KeyModel>('/Items/${identifiers}').valueChanges();
   }

@@ -17,7 +17,8 @@ export class SignInComponent{
 
     loginForm = new FormGroup({
       email: new FormControl('', [Validators.email, Validators.required]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8)])
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      
     });
 
 

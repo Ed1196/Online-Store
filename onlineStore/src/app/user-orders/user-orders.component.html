@@ -9,7 +9,7 @@
       </thead>
       <tbody>
           <tr *ngFor = "let order of Orders">
-            <td> {{ order.payload.val().ShippingAddress.name }} </td>
+            <td> {{ order.payload.val() }} </td>
             <td> {{ order.payload.val().DatePlaced | date }} </td>
           </tr>
         </tbody>

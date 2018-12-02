@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ShoppingCartService } from './shopping-cart.service';
 import { AuthService } from '../auth.service';
 import * as firebase from 'firebase';
+import { ItemService } from './item.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class OrderService {
     private cartService: ShoppingCartService, 
     private router : Router,
     private orderService: OrderService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private itemService: ItemService) { }
 
   createOrder(carts, shipping){
     let total = 0;
@@ -58,9 +60,44 @@ export class OrderService {
   }
 
   async saveOrder(order){
+    
     var user = firebase.auth().currentUser;
+    
     let result = await this.db.list('/Orders/' + user.uid).push(order);
+    
     this.cartService.clearCart();
     return result;
+  }
+
+  async checkStock(carts, products){
+      let InStock: boolean = false;
+      console.log(carts);
+      carts.forEach(i => {
+          
+        products.forEach(j => {
+          
+            if(i.key === j.key )  {
+              console.log("present");
+
+              if(i.payload.val()["quantity"] > j.payload.val()["Quantity"]){
+                console.log("Not enought items!")
+                InStock = false;
+
+              } else {
+                console.log("Enought items!")
+                let newQuantity =   ( j.payload.val()["Quantity"] ) - ( i.payload.val()["quantity"] ); 
+                console.log('NewQuantity: ' + newQuantity);
+                this.itemService.updateQuantity(j.key, newQuantity);
+                InStock = true;
+              }
+
+            } else {
+              console.log("not present")
+              InStock = false;
+            }
+        
+        })
+    })
+      return InStock;
   }
 }
