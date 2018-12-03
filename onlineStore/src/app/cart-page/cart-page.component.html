@@ -30,10 +30,13 @@
         Cart: {{ total }}   
 </p>
 <p>
-    Total Price: {{ totalPrice | currency:'USD': true}}   
+    Total Price: {{ totalPrice }}   
 </p>
   <p>
-    <a routerLink = "/check-out" class = "btn btn-primary">check-out</a>
+      <button 
+      (click)="checkout()"
+      class="btn btn-primary">Proceed to Checkout
+      </button>
   </p>
   <p>
     <button (click) = "clearCart()" class = "btn btn-light">Clear Cart</button>

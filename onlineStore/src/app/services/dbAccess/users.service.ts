@@ -16,10 +16,12 @@ export class UsersService {
       this.dataBase.object('/users/' + user.uid).update({
         name: user.displayName,
         email: user.email,
-        credits: 1000,
+       
       });
 
     }
+
+   
 
   
 

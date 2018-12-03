@@ -9,9 +9,10 @@ import { OrderService } from '../services/dbAccess/order.service';
 import { UserModel } from '../services/models/user-model';
 import { AuthService } from '../services/auth.service';
 import { ItemService } from '../services/dbAccess/item.service';
+import { CheckoutQueueService } from '../services/dbAccess/checkout-queue.service';
 
 @Component({
-  selector: 'app-check-out',
+  selector: 'check-out',
   templateUrl: './check-out.component.html',
   styleUrls: ['./check-out.component.css']
 })
@@ -38,20 +39,35 @@ export class CheckOutComponent implements OnInit, OnDestroy{
               private dbAccess: AngularFireDatabase,
               private orderService: OrderService,
               private authService: AuthService,
-              private itemService: ItemService) {
+              private itemService: ItemService,
+              private checkoutService: CheckoutQueueService) {
 
   }
 
   async placeOrder() {
-    let order = this.orderService.createOrder(this.carts, this.shipping); 
-    let InStock: boolean = await this.orderService.checkStock(this.carts, this.filterProducts);
-    console.log(InStock);
-    if(InStock){
-      this.orderService.saveOrder(order);
-      this.router.navigate(['orders-summary']);
-    } else {
-      this.router.navigate(['cart-page']);
+    console.log('Before: ' );
+    let taken = await this.checkoutService.getQueue();
+    console.log('Taken: ' + taken);
+    if(taken === false){
+
+        this.checkoutService.blockQueue();
+
+        let order = await this.orderService.createOrder(this.carts, this.shipping); 
+        let InStock: boolean = await this.orderService.checkStock(this.carts, this.filterProducts);
+        console.log('InStock' + InStock);
+
+   
+        if(InStock){
+          this.orderService.saveOrder(order);
+          this.router.navigate(['orders-summary']);
+         } else {
+          this.router.navigate(['cart-page']);
+         }
+         this.checkoutService.resetQueue();
+   } else {
+      this.router.navigate(['check-out']);
     }
+    
     
   }    
 

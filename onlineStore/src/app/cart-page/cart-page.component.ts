@@ -23,7 +23,17 @@ export class CartPageComponent implements OnInit {
   totalPrice = 0;
   
   
-  constructor(private router : Router, private cartService: ShoppingCartService, private auth: AuthService) {}
+  constructor(private router : Router, 
+              private cartService: ShoppingCartService, 
+              private auth: AuthService,) {}
+
+  checkout(){
+ 
+
+
+    this.router.navigate(['/check-out'])
+
+  }
 
   removeItem(i){
     this.cartService.delete(i);
