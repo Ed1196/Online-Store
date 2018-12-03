@@ -54,7 +54,7 @@ export class ShoppingCartService {
 
   clearCart() {
     firebase.auth().onAuthStateChanged((user)=>{
-      if (user && confirm('Are you sure?, want to delete your cart')) {
+      if (user) {
         this.dbAccess.list('/ShoppingCarts/' + user.uid).remove();
         return "good"
       }else{

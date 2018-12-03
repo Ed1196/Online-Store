@@ -9,12 +9,33 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin-cart-manage-orders.component.css']
 })
 export class AdminCartManageOrdersComponent implements OnInit {
-  Orders: any[];
+  Orders: Array<object> = [];
 
   constructor(private orderService: OrderService, private router: Router) {
    
    }
 
+   ngOnInit() {
+    firebase.auth().onAuthStateChanged((user)=>{
+    if (user) {
+    this.orderService.getAdminOrders().subscribe(products => {
+    let orders= products;
+    orders.forEach(i => {
+    let keys = Object.keys(i.payload.val())
+    keys.forEach(x =>{
+    let json = i.payload.val()[x]
+    json.ordersKey = x;
+    this.Orders.push(json);
+    })
+    //console.log("key: " + this.x2);
+    })
+    })
+    } else {
+    this.router.navigate(['sign-in'])
+    }
+    })
+    }
+/*
   ngOnInit() {
     firebase.auth().onAuthStateChanged((user)=>{
       if (user) {
@@ -28,4 +49,5 @@ export class AdminCartManageOrdersComponent implements OnInit {
     })
   }
 
+  */
 }

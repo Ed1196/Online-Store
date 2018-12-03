@@ -4,13 +4,14 @@
         <tr>
             <th>Customer</th>
             <th>Date</th>
-            <th></th>
+            <th>Order Key</th>
         </tr>
       </thead>
       <tbody>
           <tr *ngFor = "let order of Orders">
-            <td> {{ order.payload.val() }} </td>
+            <td> {{ order.payload.val().ShippingAddress.name }} </td>
             <td> {{ order.payload.val().DatePlaced | date }} </td>
+            <td> {{ order.payload.val().UserId }} </td>
           </tr>
         </tbody>
 </table>

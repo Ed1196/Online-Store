@@ -2,15 +2,16 @@
 <table class="table">
   <thead>
     <tr>
-        <th>Customer</th>
-        <th>Date</th>
-        <th></th>
+        <th> Customer </th>
+        <th> Date </th>
+        <th> Order Key </th>
     </tr>
   </thead>
   <tbody>
       <tr *ngFor = "let order of Orders">
-        <td></td>
-        <td> {{ order.payload.val() }} </td>
+        <td> {{ order.ShippingAddress.name }} </td>
+        <td> {{ order.DatePlaced | date }} </td>
+        <td> {{ order.ordersKey }} </td>
       </tr>
     </tbody>
 </table>

@@ -82,7 +82,7 @@ export class OrderService {
 
               if(i.payload.val()["quantity"] > j.payload.val()["Quantity"]){
                 console.log("Not enought items!")
-                InStock = false;
+                return false;
 
               } else {
                 console.log("Enought items!")

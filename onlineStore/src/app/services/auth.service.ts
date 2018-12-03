@@ -82,7 +82,8 @@ export class AuthService {
            firebase.database().ref("users").child(user.uid).set({
              "email": registerForm.controls['email'].value,
              "name": registerForm.controls['username'].value,
-             "Admin": false
+             "Admin": false,
+             "Credits": 10000,
            });
          }
        })
