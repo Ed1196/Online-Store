@@ -10,6 +10,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { UserModel } from '../services/models/user-model';
 import * as firebase from 'firebase'
 import { ItemService } from '../services/dbAccess/item.service';
+import { UsersService } from '../services/dbAccess/users.service';
 
 @Component({
   selector: 'cart-page',
@@ -21,18 +22,24 @@ export class CartPageComponent implements OnInit {
   carts: any[];
   total = 0;
   totalPrice = 0;
+  currentCredits: number;
+  credits = 0;
   
   
   constructor(private router : Router, 
               private cartService: ShoppingCartService, 
-              private auth: AuthService,) {}
+              private auth: AuthService,
+              private userService: UsersService) {}
 
-  checkout(){
- 
-
-
-    this.router.navigate(['/check-out'])
-
+ checkout(){
+    console.log('total: ' + this.totalPrice);
+    console.log('current: ' + this.currentCredits);
+    if(this.totalPrice > this.currentCredits){
+      console.log('Not enought credits!');
+    } else {
+      console.log('enought credits!');
+      this.router.navigate(['check-out']);
+    }
   }
 
   removeItem(i){
@@ -48,8 +55,11 @@ export class CartPageComponent implements OnInit {
   
 
   ngOnInit() {
+
+
     firebase.auth().onAuthStateChanged((user)=>{
       if (user) {
+
         this.cartService.getAll(user.uid).subscribe(products => {
           this.carts = products;
           console.log("Products: " + products);
@@ -57,7 +67,12 @@ export class CartPageComponent implements OnInit {
               this.total += i.payload.val()["quantity"];
               this.totalPrice = this.totalPrice + i.payload.val()["productId"]["Price"] * i.payload.val()["quantity"];
           })
-        })
+        });
+
+        firebase.database().ref('/users/' + user.uid).on('value', (snapshot) => {
+          this.currentCredits = snapshot.val().Credits;
+        });
+
       } else {
         this.router.navigate(['sign-in'])
       }

@@ -21,8 +21,22 @@ export class UsersService {
 
     }
 
-   
+    async decreaseFunds(totalPrice,currentCredits){
+        let newBalance = await currentCredits - totalPrice;
 
+        firebase.auth().onAuthStateChanged((user)=>{
+          if (user) {
+            this.dataBase.object('/users/' + user.uid).update({
+                Credits: newBalance,
+            });
+            
+          }else{
+            
+          }
+        })
+     
+    }
+   
   
 
     getUser(uid: string): AngularFireObject<UserModel> {

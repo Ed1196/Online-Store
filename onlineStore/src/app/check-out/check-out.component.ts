@@ -10,6 +10,7 @@ import { UserModel } from '../services/models/user-model';
 import { AuthService } from '../services/auth.service';
 import { ItemService } from '../services/dbAccess/item.service';
 import { CheckoutQueueService } from '../services/dbAccess/checkout-queue.service';
+import { UsersService } from '../services/dbAccess/users.service';
 
 @Component({
   selector: 'check-out',
@@ -24,13 +25,12 @@ export class CheckOutComponent implements OnInit, OnDestroy{
   totalPrice = 0;
   userSubscription: Subscription;
   userID: string;
+  currentCredits: number;
+  credits = 0;
 
   products: any[];
   filterProducts: any[];
   subscription: Subscription
-
-
-  
   
   constructor( 
               
@@ -40,12 +40,14 @@ export class CheckOutComponent implements OnInit, OnDestroy{
               private orderService: OrderService,
               private authService: AuthService,
               private itemService: ItemService,
-              private checkoutService: CheckoutQueueService) {
+              private checkoutService: CheckoutQueueService,
+              private userService: UsersService) {
 
   }
 
   async placeOrder() {
     console.log('Before: ' );
+
     let taken = await this.checkoutService.getQueue();
     console.log('Taken: ' + taken);
     if(taken === false){
@@ -63,6 +65,8 @@ export class CheckOutComponent implements OnInit, OnDestroy{
          } else {
           this.router.navigate(['cart-page']);
          }
+
+         this.userService.decreaseFunds(this.totalPrice, this.currentCredits);
          this.checkoutService.resetQueue();
    } else {
       this.router.navigate(['check-out']);
@@ -86,6 +90,27 @@ export class CheckOutComponent implements OnInit, OnDestroy{
           this.userID = user.uid
           this.carts = products;
         })
+      } else {
+        this.router.navigate(['sign-in'])
+      }
+    })
+
+    firebase.auth().onAuthStateChanged((user)=>{
+      if (user) {
+
+        this.cartService.getAll(user.uid).subscribe(products => {
+          this.carts = products;
+          console.log("Products: " + products);
+          this.carts.forEach(i => {
+              this.total += i.payload.val()["quantity"];
+              this.totalPrice = this.totalPrice + i.payload.val()["productId"]["Price"] * i.payload.val()["quantity"];
+          })
+        });
+
+        firebase.database().ref('/users/' + user.uid).on('value', (snapshot) => {
+          this.currentCredits = snapshot.val().Credits;
+        });
+
       } else {
         this.router.navigate(['sign-in'])
       }

@@ -1,5 +1,3 @@
-
-
 <div class="row" >
     <ng-container *ngFor = "let items of filterProducts">
         <div (ngModel) ="id" *ngIf ="items.payload.val().SubCategories === id">
@@ -8,6 +6,7 @@
                         <img class="card-img-top" src="{{items.payload.val().ImageUrl}}" alt="Card image cap">
                         <div class="card-body">
                           <h5 class="card-title">{{ items.payload.val().ItemName }}</h5>
+                          <p class="card-text">Stock Left: {{ items.payload.val().Quantity }}</p>
                           <p class="card-text">{{ items.payload.val().Price | currency: 'USD':true }}</p>
                           <button 
                             (click) = "addToCart(items)"

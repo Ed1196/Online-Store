@@ -86,6 +86,7 @@ export class OrderService {
 
               } else {
                 console.log("Enought items!")
+                
                 let newQuantity =   ( j.payload.val()["Quantity"] ) - ( i.payload.val()["quantity"] ); 
                 console.log('NewQuantity: ' + newQuantity);
                 this.itemService.updateQuantity(j.key, newQuantity);
