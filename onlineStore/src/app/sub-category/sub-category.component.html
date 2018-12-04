@@ -1,3 +1,9 @@
+<p>
+        <input 
+        #query
+        (keyup)="filter(query.value)"
+        type="text" class="form-control" placeholder="Search...."> 
+      </p>
 <div class="row" >
     <ng-container *ngFor = "let items of filterProducts">
         <div (ngModel) ="id" *ngIf ="items.payload.val().SubCategories === id">

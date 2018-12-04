@@ -54,22 +54,24 @@ export class CheckOutComponent implements OnInit, OnDestroy{
 
         this.checkoutService.blockQueue();
 
-        let order = await this.orderService.createOrder(this.carts, this.shipping); 
+        
         let InStock: boolean = await this.orderService.checkStock(this.carts, this.filterProducts);
         console.log('InStock' + InStock);
 
    
         if(InStock){
+          let order = await this.orderService.createOrder(this.carts, this.shipping); 
           this.orderService.saveOrder(order);
+          this.userService.decreaseFunds(this.totalPrice, this.currentCredits);
+          this.checkoutService.resetQueue();
           this.router.navigate(['orders-summary']);
          } else {
           this.router.navigate(['cart-page']);
          }
 
-         this.userService.decreaseFunds(this.totalPrice, this.currentCredits);
          this.checkoutService.resetQueue();
    } else {
-      this.router.navigate(['check-out']);
+      this.router.navigate(['cart-page']);
     }
     
     

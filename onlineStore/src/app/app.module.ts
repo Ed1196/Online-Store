@@ -75,7 +75,7 @@ import { OrderSummaryComponent } from './order-summary/order-summary.component';
       { path: 'category/:id', component: CategoryComponent },
       { path: 'category/sub-category/:id', component: SubCategoryComponent},
       { path: 'category/sub-category/item-page', component: ItemPageComponent },
-      { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuardService] },
+      { path: 'check-out/:id', component: CheckOutComponent, canActivate: [AuthGuardService] },
       { path: 'sign-in', component: SignInComponent },
       { path: 'sign-up', component: SignUpComponent },
       { path: 'user-orders', component: UserOrdersComponent, canActivate: [AuthGuardService] },

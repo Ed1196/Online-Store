@@ -38,7 +38,8 @@ export class CartPageComponent implements OnInit {
       console.log('Not enought credits!');
     } else {
       console.log('enought credits!');
-      this.router.navigate(['check-out']);
+      var user = firebase.auth().currentUser;
+      this.router.navigate(['check-out/' + user.uid]);
     }
   }
 

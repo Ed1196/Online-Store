@@ -71,7 +71,7 @@ export class OrderService {
   }
 
   async checkStock(carts, products){
-      let InStock: boolean = false;
+      let InStock: boolean;
       console.log(carts);
       carts.forEach(i => {
           

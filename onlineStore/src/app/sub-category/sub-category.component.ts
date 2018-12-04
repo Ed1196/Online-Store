@@ -50,5 +50,10 @@ export class SubCategoryComponent implements OnInit {
   ngOnInit() {
      
   } 
+  filter(query: string){
+    this.filterProducts = (query) ?
+      this.products.filter(p => p.payload.val()['ItemName'].toLowerCase().includes(query.toLocaleLowerCase())):
+      this.products;
+  }
 
 }

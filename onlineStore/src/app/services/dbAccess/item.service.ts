@@ -65,7 +65,7 @@ export class ItemService {
         this.delete(id);
       } else {
       this.dbAccess.object('/Items/' + id).update({
-        Quantity: newQuanity
+        Quantity: newQuanity + "",
       });
     }
 
