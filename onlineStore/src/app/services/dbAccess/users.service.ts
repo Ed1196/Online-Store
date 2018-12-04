@@ -21,6 +21,10 @@ export class UsersService {
 
     }
 
+    getCredits(uid) {
+      return this.dataBase.object('/users/' + uid + '/Credits').valueChanges();
+    }
+
     async decreaseFunds(totalPrice,currentCredits){
         let newBalance = await currentCredits - totalPrice;
 

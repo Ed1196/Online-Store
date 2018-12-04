@@ -55,7 +55,8 @@ export class CheckOutComponent implements OnInit, OnDestroy{
         this.checkoutService.blockQueue();
 
         
-        let InStock: boolean = await this.orderService.checkStock(this.carts, this.products);
+        let InStock = false;
+        InStock = await this.orderService.checkStock(this.carts, this.products);
         console.log('InStock' + InStock);
 
    
