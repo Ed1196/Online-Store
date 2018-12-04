@@ -70,8 +70,37 @@ export class OrderService {
     return result;
   }
 
-  async checkStock(carts, products){
-      let InStock: boolean;
+  decreaseStock(carts, products){
+    console.log(carts);
+    carts.forEach(i => {
+        
+      products.forEach(j => {
+        
+          if(i.key === j.key )  {
+            console.log("present");
+
+            if(i.payload.val()["quantity"] > j.payload.val()["Quantity"]){
+              console.log("Not enought items: " + i.payload.val()["productId"]["ItemName"]);
+
+            } else {
+              console.log("Enought items!")
+              
+              let newQuantity =   ( j.payload.val()["Quantity"] ) - ( i.payload.val()["quantity"] ); 
+              console.log('NewQuantity: ' + newQuantity);
+              this.itemService.updateQuantity(j.key, newQuantity);
+            }
+
+          } else {
+            console.log("not present")
+           
+          }
+      
+      })
+  })
+}
+
+  checkStock(carts, products){
+      let InStock: boolean = false;
       console.log(carts);
       carts.forEach(i => {
           
@@ -81,21 +110,19 @@ export class OrderService {
               console.log("present");
 
               if(i.payload.val()["quantity"] > j.payload.val()["Quantity"]){
-                console.log("Not enought items!")
+                console.log("Not enought items: " + i.payload.val()["productId"]["ItemName"]);
+                InStock = false;
                 return false;
 
               } else {
                 console.log("Enought items!")
                 
-                let newQuantity =   ( j.payload.val()["Quantity"] ) - ( i.payload.val()["quantity"] ); 
-                console.log('NewQuantity: ' + newQuantity);
-                this.itemService.updateQuantity(j.key, newQuantity);
                 InStock = true;
               }
 
             } else {
               console.log("not present")
-              InStock = false;
+             
             }
         
         })

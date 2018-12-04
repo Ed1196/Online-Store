@@ -55,11 +55,12 @@ export class CheckOutComponent implements OnInit, OnDestroy{
         this.checkoutService.blockQueue();
 
         
-        let InStock: boolean = await this.orderService.checkStock(this.carts, this.filterProducts);
+        let InStock: boolean = await this.orderService.checkStock(this.carts, this.products);
         console.log('InStock' + InStock);
 
    
         if(InStock){
+          this.orderService.decreaseStock(this.carts, this.products);
           let order = await this.orderService.createOrder(this.carts, this.shipping); 
           this.orderService.saveOrder(order);
           this.userService.decreaseFunds(this.totalPrice, this.currentCredits);
@@ -79,7 +80,7 @@ export class CheckOutComponent implements OnInit, OnDestroy{
 
   async ngOnInit() {
     
-    this.subscription = this.itemService.getAll()
+    this.subscription = await this.itemService.getAll()
     .subscribe(products => {
       this.filterProducts = this.products = products;
 
@@ -102,7 +103,7 @@ export class CheckOutComponent implements OnInit, OnDestroy{
 
         this.cartService.getAll(user.uid).subscribe(products => {
           this.carts = products;
-          console.log("Products: " + products);
+          //console.log("Products: " + products);
           this.carts.forEach(i => {
               this.total += i.payload.val()["quantity"];
               this.totalPrice = this.totalPrice + i.payload.val()["productId"]["Price"] * i.payload.val()["quantity"];

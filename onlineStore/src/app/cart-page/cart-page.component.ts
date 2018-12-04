@@ -63,7 +63,7 @@ export class CartPageComponent implements OnInit {
 
         this.cartService.getAll(user.uid).subscribe(products => {
           this.carts = products;
-          console.log("Products: " + products);
+          //console.log("Products: " + products);
           this.carts.forEach(i => {
               this.total += i.payload.val()["quantity"];
               this.totalPrice = this.totalPrice + i.payload.val()["productId"]["Price"] * i.payload.val()["quantity"];
