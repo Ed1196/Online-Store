@@ -1,0 +1,105 @@
+<div class="row">
+  <div class="col-md-6">
+      <form #form= "ngForm" (ngSubmit)="save(form.value)">
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select ngModel name="Categories" id="Categories" class= "form-control" 
+            [(ngModel)]= "optionSelected"   (ngModelChange) = "onOptionsSelected($event)" 
+            #category="ngModel" required>
+                <option value=""></option>
+                <option [value]="c.name" *ngFor="let c of (categories$ | async)" [ngValue]="c">
+                   {{c.name}} 
+                </option>
+            </select>
+            <div class="alert alert-danger" *ngIf="category.touched && category.invalid">
+              Select a Category!
+            </div>
+        
+          </div>
+          <div class="form-group" *ngIf="optionSelected">
+            <label for="subCategory">{{optionSelected}}</label>
+            <select ngModel name="SubCategories" id="subCategories" class="form-control"
+            [(ngModel)]= "optionSelected2"   (ngModelChange) = "onOptionsSelected2($event)" 
+             #subcategory="ngModel" required>
+                <option value=""></option>
+                <option *ngFor="let c of subCategories$ | async" [value]="c"> {{ c }}</option>
+            </select>
+            <div class="alert alert-danger" *ngIf="subcategory.touched && subcategory.invalid">
+              SubCategory is Required!
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <label for="itemName">Item Name</label>
+            <input [(ngModel)] = "Item.ItemName" name="ItemName" id="ItemName" type="text" class="form-control" 
+            #itemname="ngModel" required>
+            <div class="alert alert-danger" *ngIf="itemname.touched && itemname.invalid"> 
+              Name Needed!
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <label for="itemDescription">Item Description</label>
+            <input [(ngModel)] = "Item.ItemDescription" name="ItemDescription" id="ItemDescription" type="text" class="form-control" 
+              #itemdescription="ngModel" required>
+          </div>
+          <div class="alert alert-danger" *ngIf="itemdescription.touched && itemdescription.invalid">
+            Item Description Needed!
+          </div>
+        
+          <div class="form-group">
+            <label for="itemDescription">Item Price</label>
+              <input [(ngModel)]="Item.Price" name="Price" id="Price" type="text" class="form-control" 
+              #price="ngModel" required>
+            <div class="alert alert-danger" *ngIf="price.touched && price.invalid">
+                Price Needed!
+            </div>
+          </div>
+        
+          <div class="form-group" *ngIf="optionSelected == 'Clothing' ">
+            <label for="size">Size</label>
+            <select ngModel name="Size" id="Size" class="form-control" 
+            #size="ngModel" required>
+                <option value=""></option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="L">XL</option>
+            </select>
+            <div class="alert alert-danger" *ngIf="size.touched && size.invalid">
+                Size Needed!
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <label for="imageUrl">Image Url</label>
+            <input [(ngModel)] = "Item.ImageUrl" name="ImageUrl" id="imageUrl" type="text" class="form-control" 
+            #imageurl="ngModel" required>
+          </div>
+          <div class="alert alert-danger" *ngIf="imageurl.touched && imageurl.invalid">
+              Image Url Needed!
+          </div>
+          <button class="btn btn-primary">Save</button>
+          <button type="button" (click)="delete()" class="btn btn-danger">Delete</button>
+        </form>
+
+  </div>
+  <div class="col-md-6">
+      <div class="card" style="width: 18rem;">
+          <img class="card-img-top" [src]="Item.ImageUrl" *ngIf="Item.ImageUrl">
+          <div class="card-body">
+            <h5 class="card-title">{{ Item.ItemName }}</h5>
+            <p class="card-text">{{ Item.ItemDescription }}</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{ Item.Price | currency:'USD': true}}</li>
+            <li class="list-group-item">{{ category.value }}</li>
+            <div *ngIf="optionSelected2" >
+                <li class="list-group-item"> {{ optionSelected2 }} </li>
+            </div>  
+          </ul>
+        </div>
+  </div>
+</div>
+
+

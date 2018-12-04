@@ -1,0 +1,43 @@
+<h1>Shopping Cart</h1>
+
+<table class = "table">
+    <thead>
+      <tr>
+        <th>Item Name</th>
+        <th>Price</th>
+        <th>Total</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor = "let i of carts" >
+          <td>
+              <img [src]="i.payload.val().productId.ImageUrl" class="thumbnail" alt="">
+        </td>
+        <td>{{ i.payload.val().productId.ItemName }}</td>
+        <td>{{ i.payload.val().productId.Price | currency:'USD': true}}</td>
+        <td>{{ i.payload.val().quantity }}</td>
+        <td>
+            <button (click)=removeItem(i.key)> remove </button>
+            
+        </td>
+        
+      </tr>
+      
+    </tbody>
+  </table>
+  <p>
+        Cart: {{ total }}   
+</p>
+<p>
+    Total Price: {{ totalPrice }}   
+</p>
+  <p>
+      <button 
+      (click)="checkout()"
+      class="btn btn-primary">Proceed to Checkout
+      </button>
+  </p>
+  <p>
+    <button (click) = "clearCart()" class = "btn btn-light">Clear Cart</button>
+    </p>

@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-md navbar-light fixed-top" style="background-color: #e3f2fd;">
+    <a class="navbar-brand" routerLink="/">Online store</a>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li *ngIf= "!(userModel)" class="nav-item">
+          <a class="nav-link" routerLink="/sign-in">Sign-in</a>
+        </li>
+        <li *ngIf= "!(userModel)" class="nav-item">
+          <a class="nav-link" routerLink="/sign-up">Sign-up</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/cart-page">Cart</a>
+        </li>
+      </ul>
+    </div>
+    <div class="navbar-toggler-right">
+      <ul class="navbar-nav mr-auto">
+        <li *ngIf="userModel" ngbDropdown class="nav-item dropdown">
+          <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ userModel.name }}
+          </a>
+          <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01">
+            <ng-container *ngIf= "userModel.Admin">  
+              <a class="dropdown-item" routerLink="/admin/manage-orders"> Manage Orders </a>
+              <a class="dropdown-item" routerLink="/admin/edit-items"> Edit Items </a>
+              <a class="dropdown-item" routerLink="/admin/add-items/item-form"> Add Items </a>
+            </ng-container>
+            
+            <a class="dropdown-item" routerLink="/user-orders"> Orders </a>
+            <a class="dropdown-item" (click)="logout()" routerLink="/"> Log out </a>
+          </div>
+        </li>
+        <li>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+
+  </nav>
