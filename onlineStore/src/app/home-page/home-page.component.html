@@ -1,3 +1,41 @@
+<ngb-carousel *ngIf="images">
+  <ng-template ngbSlide>
+    <img src="holiday.jpg" alt="Random first slide">
+    <div class="carousel-caption">
+      <h3>Happy Holidays!</h3>
+      <p>Shop Holiday Gifts Right Here!</p>
+    </div>
+  </ng-template>
+  <ng-template ngbSlide>
+    <img src="Electronics.jpg" alt="Random second slide">
+    <div class="carousel-caption">
+      <h3><a [routerLink]="['category/Electronics']">Get The Latest Electonics! </a></h3>
+    </div>
+  </ng-template>
+  <ng-template ngbSlide>
+    <img src="style.jpg" alt="Random third slide">
+    <div class="carousel-caption">
+      <h3><a [routerLink]="['category/Clothing']">Keep Up With The Latest Trend!</a></h3>
+      <p>Shop For The Winter Season Right Now! </p>
+    </div>
+  </ng-template>
+</ngb-carousel>
+
+
+<div class="main">
+	<div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
+	  <button class="btn btn-outline-primary mr-2" id="dropdownManual" ngbDropdownAnchor (focus)="myDrop.open()">Categories</button>
+	  <div ngbDropdownMenu aria-labelledby="dropdownManual">
+		<div *ngFor="let cat of Categories$ | async" >
+			<a  
+						  [routerLink]="['/category/', cat.name]">
+						  {{ cat.name }}
+			</a>
+		</div>
+	</div>
+</div>
+
+<!--
 <div class="row">
         <ul class="list-group">
             <div *ngFor="let cat of Categories$ | async" >
@@ -14,4 +52,5 @@
             </div>
         </ul>
 </div>
+-->
 
