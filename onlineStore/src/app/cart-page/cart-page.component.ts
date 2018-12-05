@@ -24,9 +24,12 @@ export class CartPageComponent implements OnInit {
   totalPrice = 0;
   currentCredits: number;
   credits = 0;
+
+  error: any;
   
   
-  constructor(private router : Router, 
+  constructor(private router : Router,
+              private route: ActivatedRoute, 
               private cartService: ShoppingCartService, 
               private auth: AuthService,
               private userService: UsersService) {}
@@ -35,7 +38,7 @@ export class CartPageComponent implements OnInit {
     console.log('total: ' + this.totalPrice);
     console.log('current: ' + this.currentCredits);
     if(this.totalPrice > this.currentCredits){
-      console.log('Not enought credits!');
+      this.error = 'Not enought credits!';
     } else {
       console.log('enought credits!');
       var user = firebase.auth().currentUser;
@@ -57,6 +60,7 @@ export class CartPageComponent implements OnInit {
 
   ngOnInit() {
 
+    this.error = this.route.snapshot.queryParamMap.get('error');
 
     firebase.auth().onAuthStateChanged((user)=>{
       if (user) {

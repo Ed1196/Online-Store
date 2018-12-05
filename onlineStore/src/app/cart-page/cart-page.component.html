@@ -44,3 +44,6 @@
   <p>
     <button (click) = "clearCart()" class = "btn btn-light">Clear Cart</button>
     </p>
+    <div *ngIf="error != null">
+      <div class="alert"> {{ error }}</div>
+    </div>
