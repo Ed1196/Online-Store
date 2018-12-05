@@ -46,10 +46,10 @@ export class CheckOutComponent implements OnInit, OnDestroy{
   }
 
   async placeOrder() {
-    console.log('Before: ' );
+    //console.log('Before: ' );
 
     let taken = await this.checkoutService.getQueue();
-    console.log('Taken: ' + taken);
+    //console.log('Taken: ' + taken);
     if(taken === false){
 
         this.checkoutService.blockQueue();
@@ -57,7 +57,7 @@ export class CheckOutComponent implements OnInit, OnDestroy{
         
         let InStock = false;
         InStock = await this.orderService.checkStock(this.carts, this.products);
-        console.log('InStock' + InStock);
+        console.log('InStock: ' + InStock);
 
    
         if(InStock){

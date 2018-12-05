@@ -14,10 +14,10 @@ export class AdminAuthGuardService implements CanActivate {
   canActivate(): Observable<boolean> {
     let booleanIsAdmin = this.auth.userModel$
     .map(userModel => {
-        console.log(`DBuG: userModel.Admin=`, userModel.Admin);
+        //console.log(`DBuG: userModel.Admin=`, userModel.Admin);
         return userModel.Admin;
     });
-    console.log(`DBuG: userModel.Admin=`, booleanIsAdmin);
+    //console.log(`DBuG: userModel.Admin=`, booleanIsAdmin);
     return booleanIsAdmin;
   }
 

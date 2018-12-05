@@ -31,7 +31,7 @@ export class SignInComponent{
 
   loginEmail(loginForm) {
     this.auth.doLoginEmail(loginForm);
-      this.router.navigate(['/']);
+      
 
   }
 

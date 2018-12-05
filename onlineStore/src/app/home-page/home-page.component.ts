@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class HomePageComponent{
   Items$: Observable<any[]>;
   Categories$: Observable<any[]>;
+  images = [].map(() => ``);
 
 
   constructor(private itemService: ItemService, private categoryService: CategoryService, private route:Router) { 
@@ -23,7 +24,7 @@ export class HomePageComponent{
   }
 
   goToCategory(category) {
-    console.log(JSON.stringify(category, undefined,2));
+    //console.log(JSON.stringify(category, undefined,2));
     this.route.navigate(['/category'+ '/' + category]);
   }
 

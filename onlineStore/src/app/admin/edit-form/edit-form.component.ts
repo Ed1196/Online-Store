@@ -29,12 +29,12 @@ export class EditFormComponent implements OnInit {
     }
 
     onOptionsSelected(event): void{
-      console.log(JSON.stringify(event, undefined,2));
+      //console.log(JSON.stringify(event, undefined,2));
       this.subCategories$ = this.categoryService.getSubCategories(this.optionSelected)
     }
   
     onOptionsSelected2(event): void{
-      console.log(JSON.stringify(event, undefined,2));
+      //console.log(JSON.stringify(event, undefined,2));
       
     }
     

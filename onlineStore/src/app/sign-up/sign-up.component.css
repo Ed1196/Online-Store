@@ -1,0 +1,37 @@
+.input{
+    width: 250px;
+    color: #808080;
+}
+
+.main{
+	margin-top: 100px;
+	margin-left: 200px;
+	margin-right: 200px;
+	margin-bottom: 50px;
+	padding: 25px;
+	color: #000000;
+	background-color: white;
+	border: solid;
+	/*border-radius: 3px;*/
+}
+
+.submitClass{
+	width: 175px;
+	margin-top: 15px;
+	background-color: #3366ff;
+	padding: 3px;
+	border: solid;
+	border-color: #3366ff;
+	border-radius: 5px;
+	color: white;
+	cursor: pointer;
+}
+/*
+.superClass{
+	margin-top: 150px;
+	margin-left:250px;
+	margin-right: 250px;
+	margin-bottom: 150px;
+	background-color: black;
+	border-radius: 7px;
+}*/
