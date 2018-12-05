@@ -33,3 +33,7 @@
     (click)="placeOrder()"
     class="btn btn-primary">Place Order</button>
 </form>
+<div *ngIf="error != null">
+    <div class="alert"> {{ error }}</div>
+  </div>
+  

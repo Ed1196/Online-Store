@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ShoppingCartService } from '../services/dbAccess/shopping-cart.service';
 import * as firebase from 'firebase';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFireObject, AngularFireDatabase } from 'angularfire2/database';
 import { CartModel } from '../services/models/cart-model';
 import { Subscription } from 'rxjs';
@@ -30,13 +30,18 @@ export class CheckOutComponent implements OnInit, OnDestroy{
 
   products: any[];
   filterProducts: any[];
-  subscription: Subscription
+  subscription: Subscription;
+
+  error: any;
+
+ 
   
   constructor( 
               
               private cartService: ShoppingCartService, 
               private router : Router,
               private dbAccess: AngularFireDatabase,
+              private route: ActivatedRoute,
               private orderService: OrderService,
               private authService: AuthService,
               private itemService: ItemService,
@@ -46,10 +51,10 @@ export class CheckOutComponent implements OnInit, OnDestroy{
   }
 
   async placeOrder() {
-    console.log('Before: ' );
+    //console.log('Before: ' );
 
     let taken = await this.checkoutService.getQueue();
-    console.log('Taken: ' + taken);
+    //console.log('Taken: ' + taken);
     if(taken === false){
 
         this.checkoutService.blockQueue();
@@ -57,7 +62,7 @@ export class CheckOutComponent implements OnInit, OnDestroy{
         
         let InStock = false;
         InStock = await this.orderService.checkStock(this.carts, this.products);
-        console.log('InStock' + InStock);
+        console.log('InStock: ' + InStock);
 
    
         if(InStock){
@@ -68,18 +73,20 @@ export class CheckOutComponent implements OnInit, OnDestroy{
           this.checkoutService.resetQueue();
           this.router.navigate(['orders-summary']);
          } else {
-          this.router.navigate(['cart-page']);
+          this.router.navigate(['cart-page'], {queryParams: {error:'Item out of stock!'}});
          }
 
          this.checkoutService.resetQueue();
    } else {
-      this.router.navigate(['cart-page']);
+      this.router.navigate(['cart-page'], {queryParams: {error:'Check-out is busy!'}});
     }
     
     
   }    
 
   async ngOnInit() {
+
+    this.error = this.route.snapshot.queryParamMap.get('error');
     
     this.subscription = await this.itemService.getAll()
     .subscribe(products => {

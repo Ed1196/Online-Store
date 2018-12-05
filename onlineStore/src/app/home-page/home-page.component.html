@@ -1,17 +1,64 @@
-<div class="row">
-        <ul class="list-group">
-            <div *ngFor="let cat of Categories$ | async" >
-                <div class="card bg-dark text-white">
-                    <img class="card-img" src="https://www.zmedispa.com/wp-content/uploads/2017/02/placeholder-800x600.png" alt="Card image">
-                    <div class="card-img-overlay">
-                      <a  
-                      class="card-title"
-                      [routerLink]="['/category/', cat.name]">
-                      {{ cat.name }}
-                    </a>
-                    </div>
+<ngb-carousel class="slides" *ngIf="images">
+        <ng-template ngbSlide>
+          <img src="https://www.yourchoice.sg/wp-content/uploads/2017/03/yourchoice-banner4.jpg">
+          <div class="carousel-caption">
+            <h3 class="text">Happy Holidays!</h3>
+            <p class="subname">Shop Holiday Gifts Right Here!</p>
+          </div>
+        </ng-template>
+        <ng-template ngbSlide>
+          <img src="https://guzomart.com/images/grslide/3/gadgets-banner-full.jpg">
+          <div class="carousel-caption">
+            <h3><a class = "link"[routerLink]="['category/Electronics']">Get The Latest Electronics! </a></h3>
+          </div>
+        </ng-template>
+        <ng-template ngbSlide>
+          <img src="https://www.bunker-mentality.com/media/catalog/category/sale_bat_banner_ss18.jpg">
+          <div class="carousel-caption">
+            <h3><a class = "link" [routerLink]="['category/Clothing']">Keep Up With The Latest Trends!</a></h3>
+            <p class="subname">Shop For The Winter Season Right Now! </p>
+          </div>
+        </ng-template>
+        <ng-template ngbSlide>
+                <img src="https://s3.amazonaws.com/resources.salewhale.ca/retailer_widgets/SW-178596/medias/5/F/2/BE0E/fresh-fruits-and-vegetables-at-intermarche-universel.png">
+                <div class="carousel-caption">
+                  <h3><a class = "link" [routerLink]="['category/Food']">Buy the Freshest Groceries!</a></h3>
+                  <p class="subname"> Shop For The Winter Season Right Now! </p>
                 </div>
-            </div>
-        </ul>
-</div>
+              </ng-template>
+      </ngb-carousel>
 
+      <ng-container>
+      
+            <div>
+                    <div class="container">
+                            <div class="row">
+                              <div class="col-sm">
+                                 <a class="sub-text" style="text-align:center;" [routerLink]="['category/sub-category/T-Shirt']">T-SHIRT</a>
+                              </div>
+                              <div class="col-sm">
+                                 <a class="sub-text" style="text-align:center;"  [routerLink]="['category/sub-category/Jackets']">JACKETS</a>
+                              </div>
+                              <div class="col-sm">
+                                <a class="sub-text" style="text-align:center;"  [routerLink]="['category/sub-category/Jeans']">JEANS</a>
+                              </div>
+                              <div class="col-sm">
+                                <a class="sub-text" style="text-align:center;"  [routerLink]="['category/sub-category/Phones']">PHONES</a>
+                              </div>
+                              <div class="col-sm">
+                                <a class="sub-text" style="text-align:center;"  [routerLink]="['category/sub-category/Consoles']">CONSOLES</a>
+                              </div>
+                              <div   class="col-sm">
+                                <a class="sub-text" style="text-align:center;" [routerLink]="['category/sub-category/Meat']">MEAT</a>
+                             </div>
+                             <div class="col-sm">
+                                <a class="sub-text" style="text-align:center;" [routerLink]="['category/sub-category/Vegetables']">VEGETABLES</a>
+                             </div>
+                              <div class="col-sm">
+                                <a class="sub-text" style="text-align:center;" [routerLink]="['category/sub-category/Frozen']">FROZEN</a>
+                              </div>
+                            </div>
+                          </div>
+                </div>
+            
+        </ng-container>

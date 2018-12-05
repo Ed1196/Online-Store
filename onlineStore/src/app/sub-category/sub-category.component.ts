@@ -41,7 +41,7 @@ export class SubCategoryComponent implements OnInit {
     }
 
     addToCart(item) {
-      console.log(item);
+      //console.log(item);
       this.cartService.addToCart2(item);
     }
 

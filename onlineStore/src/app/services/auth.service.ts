@@ -41,9 +41,11 @@ export class AuthService {
       loginForm.controls['email'].value, 
       loginForm.controls['password'].value)
         .then((firebaseUser) => {
-           console.log(firebaseUser)
+           //console.log(firebaseUser)
+           this.router.navigate(['/']);
         }).catch((error) => {
            console.log(error)
+           this.router.navigate(['/sign-in']);
         })
   }
 
@@ -83,7 +85,7 @@ export class AuthService {
              "email": registerForm.controls['email'].value,
              "name": registerForm.controls['username'].value,
              "Admin": false,
-             "Credits": 10000,
+             "Credits": 1000,
            });
          }
        })

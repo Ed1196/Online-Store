@@ -1,25 +1,27 @@
-<div>
-    <form [formGroup]="registerForm" (ngSubmit)="onRegister(this.registerForm)">
-      <!--<input type="hidden" formControlName="$key">-->
-      <div>
+<div class="superClass">
+    <div class="main">
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister(this.registerForm)">
+        <!--<input type="hidden" formControlName="$key">-->
+        <div>
         <label>Email</label>
         <input type="email" class="form-control" formControlName="email">
         <div *ngIf="submitted && email?.invalid">This field is required.</div>
-      </div>
-      <div>
+        </div>
+        <div>
         <label>Password</label>
         <input type="password" class="form-control" formControlName="password" placeholder="Atleast 6 numbers">
         <!--<div>
           <label *ngIf="password.errors.required">This field is required.</label>
           <label *ngIf="password.errors.minlength">Atleast 8 numbers.</label>
         </div>-->
-      </div>
-      <div>
+        </div>
+        <div>
         <label>Username</label>
         <input type="Username" class="form-control" formControlName="username">
-      </div>
-      <div>
-        <input type="submit" value="Submit">
-      </div>
-    </form>
+        </div>
+        <div>
+        <input class="submitClass" type="submit" value="Submit">
+        </div>
+      </form>
+    </div>
   </div>
