@@ -13,9 +13,9 @@ import 'rxjs/add/operator/take';
 export class ItemFormComponent implements OnInit {
   categories$: Observable<any[]>;
   subCategories$: Observable<any[]>;
-  optionSelected: Observable<any>;
-  optionSelected2: Observable<any>;
-  Item = {};
+  optionSelected: string;
+  optionSelected2: string;
+  Item: any = {};
 
   constructor(private categoryService: CategoryService,
               private itemService: ItemService,
@@ -28,7 +28,7 @@ export class ItemFormComponent implements OnInit {
   }
 
   onOptionsSelected(event): void{
-    console.log(JSON.stringify(event, undefined,2));
+    //console.log(JSON.stringify(event, undefined,2));
     this.subCategories$ = this.categoryService.getSubCategories(this.optionSelected)
   }
 

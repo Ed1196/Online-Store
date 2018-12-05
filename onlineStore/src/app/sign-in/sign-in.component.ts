@@ -13,7 +13,7 @@ import * as firebase from 'firebase';
 })
 export class SignInComponent{
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(public auth: AuthService, public router: Router) {}
 
     loginForm = new FormGroup({
       email: new FormControl('', [Validators.email, Validators.required]),

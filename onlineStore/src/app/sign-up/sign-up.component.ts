@@ -13,7 +13,9 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-    registerForm = new FormGroup({
+    
+    
+    public registerForm = new FormGroup({
       email: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       username: new FormControl('', Validators.required),

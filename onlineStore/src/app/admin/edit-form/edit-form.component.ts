@@ -13,10 +13,10 @@ import { ItemModel } from 'src/app/services/models/item-model';
 export class EditFormComponent implements OnInit {
   categories$: Observable<any[]>;
   subCategories$: Observable<any[]>;
-  optionSelected: Observable<any>;
-  optionSelected2: Observable<any>;
-  Item = {};
-  id;
+  optionSelected: string;
+  optionSelected2: string;
+  Item: any = {};
+  id: any;
 
   constructor(private categoryService: CategoryService,
     private itemService: ItemService,
