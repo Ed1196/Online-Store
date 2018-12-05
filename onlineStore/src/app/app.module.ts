@@ -102,7 +102,7 @@ import { OrderSummaryComponent } from './order-summary/order-summary.component';
 })
 export class AppModule{
 
-  constructor(private auth: AuthService) {
+  constructor() {
    
   }
 

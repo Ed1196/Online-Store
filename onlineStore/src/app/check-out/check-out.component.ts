@@ -20,7 +20,7 @@ import { UsersService } from '../services/dbAccess/users.service';
 export class CheckOutComponent implements OnInit, OnDestroy{ 
   userModel: UserModel;
   carts: any[];
-  shipping = {};
+  shipping: any = {};
   total = 0;
   totalPrice = 0;
   userSubscription: Subscription;
