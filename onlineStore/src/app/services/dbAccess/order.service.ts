@@ -100,8 +100,9 @@ export class OrderService {
 }
 
   checkStock(carts, products){
-      let InStock: boolean = false;
+      let InStock: boolean = true;
       console.log(carts);
+      
       carts.forEach(i => {
           
         products.forEach(j => {
@@ -112,12 +113,10 @@ export class OrderService {
               if(i.payload.val()["quantity"] > j.payload.val()["Quantity"]){
                 console.log("Not enought items: " + i.payload.val()["productId"]["ItemName"]);
                 InStock = false;
-                return false;
+                return;
 
               } else {
                 console.log("Enought items!")
-                
-                InStock = true;
               }
 
             } else {
