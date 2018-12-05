@@ -12,6 +12,10 @@ import { Router } from '@angular/router';
 export class HomePageComponent{
   Items$: Observable<any[]>;
   Categories$: Observable<any[]>;
+  
+  
+  
+  images = [1, 2, 3].map(() => `https://picsum.photos/900/500?random&t=${Math.random()}`);
 
 
   constructor(private itemService: ItemService, private categoryService: CategoryService, private route:Router) { 
