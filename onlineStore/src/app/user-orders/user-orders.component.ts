@@ -20,7 +20,7 @@ export class UserOrdersComponent implements OnInit {
       if (user) {
         this.orderService.getUserOrders(user.uid).subscribe(products => {
           this.Orders = products;
-          console.log("Products: " + products);
+          //console.log("Products: " + products);
         })
       } else {
         this.router.navigate(['sign-in'])

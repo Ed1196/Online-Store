@@ -1,5 +1,5 @@
-
-<h2>Shipping</h2>
+<h2>Shipping Information</h2>
+<div class="main">
 <form #f="ngForm">
   <div class="form-group">
     <label for="">Name</label>
@@ -33,7 +33,7 @@
     (click)="placeOrder()"
     class="btn btn-primary">Place Order</button>
 </form>
-<div *ngIf="error != null">
-    <div class="alert"> {{ error }}</div>
+<div   *ngIf="error != null">
+    <div  class="alert alert-danger"> <strong> {{ error }}</strong></div>
   </div>
-  
+</div>

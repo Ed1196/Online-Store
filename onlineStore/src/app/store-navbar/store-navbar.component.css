@@ -7,6 +7,14 @@
   cursor: pointer;
 }
 
+.navbar-toggler-right{
+	margin-right: 80px;
+}
+
+.dropdown-menu{
+	margin-right: 50px;
+}
+
 varText{
   color: white;
 }
