@@ -3,10 +3,11 @@
 <table class = "table">
     <thead>
       <tr>
+        <th></th>
         <th>Item Name</th>
         <th>Price</th>
-        <th>Total</th>
         <th>Quantity</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -35,8 +36,8 @@
 <p>
     Current Credits: {{ currentCredits }}   
 </p>
-  <p>
-      <button 
+<p>
+      <button [disabled]=" total === 0"
       (click)="checkout()"
       class="btn btn-primary">Proceed to Checkout
       </button>
@@ -44,6 +45,6 @@
   <p>
     <button (click) = "clearCart()" class = "btn btn-light">Clear Cart</button>
     </p>
-    <div *ngIf="error != null">
-      <div class="alert"> {{ error }}</div>
+    <div  *ngIf="error != null">
+      <div class="alert alert-danger"><strong>{{ error }}</strong> </div>
     </div>

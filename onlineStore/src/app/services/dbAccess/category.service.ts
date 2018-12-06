@@ -16,7 +16,7 @@ export class CategoryService {
   }
 
   getSubCategories(optionSelected) {
-    console.log(optionSelected);
+    //console.log(optionSelected);
     return this.dbAccess.list('/SubCategory' + '/' + optionSelected ).valueChanges();
   }
 

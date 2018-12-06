@@ -1,3 +1,21 @@
-input{
-	width:275px;
+.input{
+    width: 250px;
+    color: #808080;
+}
+
+h2{
+	text-align: center;
+	margin-top: 100px;
+}
+
+.main{
+	
+	margin-left: 200px;
+	margin-right: 200px;
+	margin-bottom: 50px;
+	padding: 25px;
+	color: #000000;
+	background-color: white;
+	border: solid;
+	/*border-radius: 3px;*/
 }

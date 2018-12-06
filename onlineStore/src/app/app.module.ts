@@ -39,6 +39,7 @@ import { ItemService } from './services/dbAccess/item.service';
 import { EditFormComponent } from './admin/edit-form/edit-form.component';
 import { ShoppingCartService } from './services/dbAccess/shopping-cart.service';
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
+import { AllItemsComponent } from './all-items/all-items.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { OrderSummaryComponent } from './order-summary/order-summary.component';
     ItemFormComponent,
     EditFormComponent,
     OrderSummaryComponent,
+    AllItemsComponent,
 
   ],
   imports: [
